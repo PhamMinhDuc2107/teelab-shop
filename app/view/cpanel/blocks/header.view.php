@@ -173,7 +173,7 @@
     <a class="nav-link dropdown-toggle" href="<?php echo ROOT ?>assets/admin/#" id="userDropdown" role="button"
         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         <span class="mr-2 d-none d-lg-inline text-gray-600 small">
-            <?php echo getSession('user') ? ucfirst(getSession('user')->username) : "Welcome hacker" ?></span>
+            <?php echo isset($_SESSION['user']) ? ucfirst($_SESSION['user']->username) : "Welcome hacker" ?></span>
             <img class="img-profile rounded-circle"
             src="img/undraw_profile.svg">
         </a>
@@ -193,7 +193,7 @@
             Activity Log
         </a>
         <div class="dropdown-divider"></div>
-        <a href="<?php echo ROOT ?>admin/logout" class="dropdown-item" >
+        <a href="<?php echo ROOT ?>cpanel/logout" class="dropdown-item" >
             <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
             Logout
         </a>
