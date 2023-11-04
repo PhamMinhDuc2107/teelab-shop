@@ -1,0 +1,18 @@
+@mixin flex($align: start, $justify: start, $direction: row, $wrap: nowrap) {
+   display: flex;
+   align-items: $align;
+   justify-content: $justify;
+   flex-direction: $direction;
+   flex-wrap: $wrap;
+}
+@mixin hiddenText($number) {
+   overflow: hidden;
+   display: -webkit-box;
+   -webkit-line-clamp: $number;
+   -webkit-box-orient: vertical;
+}
+@mixin hidden() {
+   opacity: 0;
+   visibility: hidden;
+   transition: all 0.3s linear;
+}
