@@ -4,12 +4,12 @@
       <div class="footer__container">
          <div class="footer__list">
             <div class="footer__address">
-               <div class="footer__item--logo">
+               <a href="<?php echo ROOT ?>" class="footer__item--logo" style="display: inline-block;">
                   <img
                   src="<?php echo ROOT ?>assets/client/images/logo_footer.webp"
                   alt=""
                   />
-               </div>
+               </a>
                <ul class="footer__address--list">
                   <li class="footer__address--item">
                      <i class="fa-solid fa-location-dot"></i>
@@ -53,7 +53,7 @@
                   </span>
                   <ul class="footer__social--list">
                      <li class="footer__social--item">
-                        <a href="">
+                        <a href=">">
                            <img
                            src="<?php echo ROOT ?>assets/client/images/facebook.svg"
                            alt=""

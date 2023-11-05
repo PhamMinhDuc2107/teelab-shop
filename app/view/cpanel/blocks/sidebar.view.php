@@ -67,18 +67,16 @@ data-parent="#accordionSidebar">
 </div>
 </li>
 <li class="nav-item">
-	<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseOne"
-	aria-expanded="true" aria-controls="#collapseOne">
-	<i class="fa-solid fa-user"></i>
+	<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseProduct"
+	aria-expanded="true" aria-controls="#collapseProduct">
+	<i class="fa-solid fa-box"></i>
 	<span>Sản phẩm</span>
 </a>
-<div id="collapseOne" class="collapse" aria-labelledby="headingUtilities"
+<div id="collapseProduct" class="collapse" aria-labelledby="headingUtilities"
 data-parent="#accordionSidebar">
 <div class="bg-white py-2 collapse-inner rounded">
-	<a class="collapse-item" href="<?php echo ROOT ?>admin">Liệt kê sản phẩm</a>
-	<a class="collapse-item" href="<?php echo ROOT ?>admin/add_admin">Thêm sản phẩm</a>
-	<a class="collapse-item" href="<?php echo ROOT ?>admin/add_admin">Thêm sản màu sắc sản phẩm</a>
-	<a class="collapse-item" href="<?php echo ROOT ?>admin/add_admin">Thêm sản phẩm</a>
+	<a class="collapse-item" href="<?php echo ROOT ?>product">Liệt kê sản phẩm</a>
+	<a class="collapse-item" href="<?php echo ROOT ?>product/add_product">Thêm sản phẩm</a>
 </div>
 </div>
 </li>

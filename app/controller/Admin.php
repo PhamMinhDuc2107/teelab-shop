@@ -9,67 +9,88 @@ class Admin extends Controller
 	}
 	public function index()
 	{
-		if(getSession("login") || isset($_COOKIE['user'])) {
-			$this->view("cpanel/layout", [
-				"title" => "Admin - Dashboard",
-				"page" => "dashboard/dashboard",
-				"heading" => "Dashboard",
-			]);
-		}else {
-			redirect("admin/login");
-		}
+		$admin = $this->AdminModel->findAll();
+		$this->view("cpanel/layout", [
+			"title" => "List Admin - Dashboard",
+			"page"=>"admin/index",
+			"heading" => "Admin",
+			"data"=>$admin,
+		]);
 	}
-	public function login()
+	public function add_admin() 
 	{
-		if(getSession("login") || isset($_COOKIE['user'])) {
-			redirect("admin");
-		}else {
-			$this->view("cpanel/layoutAuth", [
-				"title" => "Login - Dashboard",
-			]);
-		}
-		
+		$this->view("cpanel/layout", [
+			"title" => "Add Admin - Dashboard",
+			"page"=>"admin/form_admin",
+			"heading" => "Add New Admin",
+			"action"=>"admin/add_admin_post",
+		]);
 	}
-	public function login_post()
+	public function add_admin_post() 
 	{
-		if(isset($_POST)) {
+		if($_POST)
+		{
 			$username = isset($_POST['username']) ? $_POST['username'] : "";
 			$password = isset($_POST['password']) ? $_POST['password'] : "";
-			$remember = isset($_POST['remember']) ? 1 : 0;
-			$user = $this->AdminModel->where(["username" => $username]);
-			if(isset($user[0])) 
+			$password = password_hash($password, PASSWORD_DEFAULT);
+			$email = isset($_POST['email']) ? $_POST['email'] : "";
+			$data = ["username" => $username, "password" => $password, "email" => $email];
+			if($this->AdminModel->insert($data)) 
 			{
-				if(password_verify($password,$user[0]->password)) 
-				{
-					if($remember == 1) {
-						setcookie("user", "usr=".$user[0]->username."&hash=".$user[0]->password, time() + (3600 * 24 * 30));
-					}
-					setSession("login", true);
-					setSession("user", $user[0]);
-					redirect("admin");					
-				}else 
-				{
-					redirect("admin/login?invalid");
-				}
-			}else 
-			{
-				redirect("admin/login?invalid");
+				$messager['mes'] = "Thêm admin thành công!";
+				redirect('admin?msg='.urldecode(serialize($messager)));
+			}else {
+				$messager['mes'] = "Thêm admin không thành công!";
+				redirect('admin?msg='.urldecode(serialize($messager)));
 			}
-		}  
+		}
 	}
-	public function logout() 
+	public function edit_admin($id) 
 	{
-		if(getSession("login") || isset($_COOKIE['user'])) {
-			if($_COOKIE['user']) {
-				setcookie("user","", time() - 3600*24*30);
+		$record = $this->AdminModel->where(["id" => $id]);
+		$this->view("cpanel/layout", [
+			"title" => "Edit Admin - Dashboard",
+			"page"=>"admin/form_admin",
+			"heading" => "Edit New Admin",
+			"action"=>"admin/edit_admin_post/$id",
+			"data" => $record,
+		]);
+	}
+	public function edit_admin_post($id) 
+	{
+		if($_POST)
+		{
+			$username = isset($_POST['username']) ? $_POST['username'] : "";
+			$password = isset($_POST['password']) ? $_POST['password'] : "";
+			$email = isset($_POST['email']) ? $_POST['email'] : "";
+			$data = ["username" => $username, "email" => $email];
+			if(!empty($password)) {
+				$password = password_hash($password, PASSWORD_DEFAULT);
+				$data = ["username" => $username,"password" => $password, "email" => $email];
 			}
-			removeSession("login");
-			removeSession("user");
-			redirect("admin/login");
+			show($data);
+			if($this->AdminModel->update($id,$data)) 
+			{
+				$messager['mes'] = "Cập nhật admin thành công!";
+				redirect('admin?msg='.urldecode(serialize($messager)));
+			}else {
+				$messager['mes'] = "Cập nhật admin không thành công!";
+				redirect('admin?msg='.urldecode(serialize($messager)));
+			}
+		}
+	}
+	public function delete_admin($id) 
+	{
+		if($this->AdminModel->delete($id)) 
+		{
+			$messager['mes'] = "Xoá admin thành công!";
+			redirect('admin?msg='.urldecode(serialize($messager)));
 		}else {
-			redirect("admin/login");
+			$messager['mes'] = "Xoá admin không thành công!";
+			redirect('admin?msg='.urldecode(serialize($messager)));
 		}
 	}
 }
+
 
 ?>

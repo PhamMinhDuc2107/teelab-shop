@@ -237,59 +237,19 @@
       <!-- nav -->
       <!--header__menu -->
       <ul class="header__menu">
-         <li class="header__menu--item">
-            <a href="./product.html" class="header__menu--link"
-            >Tất cả sản phẩm</a
-            >
-         </li>
-         <li class="header__menu--item">
-            <a href="./product.html" class="header__menu--link"
-            >Áo thun</a
-            >
-         </li>
-         <li class="header__menu--item">
-            <a href="./product.html" class="header__menu--link"
-            >Baby Tee</a
-            >
-         </li>
-         <li class="header__menu--item">
-            <a href="./product.html" class="header__menu--link"
-            >Áo Polo</a
-            >
-         </li>
-         <li class="header__menu--item">
-            <a href="./product.html" class="header__menu--link"
-            >Áo sơ mi</a
-            >
-         </li>
-         <li class="header__menu--item">
-            <a href="./product.html" class="header__menu--link"
-            >Áo Khoác</a
-            >
-         </li>
-         <li class="header__menu--item">
-            <a href="./product.html" class="header__menu--link"
-            >Áo Hoodie</a
-            >
-         </li>
-         <li class="header__menu--item">
-            <a href="./product.html" class="header__menu--link"
-            >Quần</a
-            >
-         </li>
-         <li class="header__menu--item">
-            <a href="./product.html" class="header__menu--link"
-            >Quần nữ</a
-            >
-         </li>
-         <li class="header__menu--item">
-            <a href="./product.html" class="header__menu--link"
-            >Phụ Kiện</a
-            >
-         </li>
-      </ul>
-      <!--header__menu -->
+         <?php $categories = isset($data['dataCategories']) ? $data['dataCategories'] : "" ?>
+         <?php if(isset($categories)) :?>
+            <?php foreach ($categories as $item) :?>
+               <li class="header__menu--item">
+                  <a href="<?php echo ROOT.$item->slug ?>" class="header__menu--link"
+                     ><?php  echo $item->name  ?></a
+                     >
+                  </li>
+               <?php endforeach; ?>
+            <?php endif;?>
+         </ul>
+         <!--header__menu -->
+      </div>
    </div>
-</div>
 </section>
          <!-- /header -->

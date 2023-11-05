@@ -9,7 +9,7 @@ Class Controller
          require_once $filename;
       }else 
       {
-         $filename =  "./app/view/pages/404.view.php";
+         $filename =  "./app/view/client/pages/404.view.php";
          require $filename;
       }
    }

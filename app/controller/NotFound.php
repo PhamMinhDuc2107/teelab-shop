@@ -5,6 +5,7 @@ class NotFound extends Controller
 		$this->view("client/layout",[
 			"page" => "404",
 			"title" => "Not Found",
+			
 		]);
 	}
 }

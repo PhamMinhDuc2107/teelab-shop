@@ -42,7 +42,7 @@
 										<h1 class="h4 text-gray-900 mb-4">Welcome Back!</h1>
 									</div>
 									<?php echo isset($_GET['invalid']) ? "<span style='color:red; font-size:15px; display:inline-block; margin: 10px 0;'>Tài khoản hoặc mật khẩu không đúng</span>" : "" ?>
-									<form method="post" class="user" action="<?php echo ROOT ?>admin/login_post">
+									<form method="post" class="user" action="<?php echo ROOT ?>cpanel/login_post">
 										<div class="form-group">
 											<input type="text" class="form-control form-control-user"
 											id="exampleInputEmail" name="username" 

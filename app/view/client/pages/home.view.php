@@ -1,18 +1,14 @@
 <!-- slider -->
 <section class="home__slider swiper">
 	<ul class="home__slider--list swiper-wrapper">
-		<li class="home__slider--item swiper-slide">
-			<img src="<?php echo ROOT ?>assets/client/images/slider__!.webp" alt="" />
-		</li>
-		<li class="home__slider--item swiper-slide">
-			<img src="<?php echo ROOT ?>assets/client/images/slider_2.webp" alt="" />
-		</li>
-		<li class="home__slider--item swiper-slide">
-			<img src="<?php echo ROOT ?>assets/client/images/slider__3.webp" alt="" />
-		</li>
-		<li class="home__slider--item swiper-slide">
-			<img src="<?php echo ROOT ?>assets/client/images/slider_4.webp" alt="" />
-		</li>
+		<?php $banner = isset($data['dataBanner']) ? $data['dataBanner'] : "" ?>
+		<?php if(isset($banner)): ?>
+			<?php foreach($banner as $item) :?>
+				<li class="home__slider--item swiper-slide">
+					<img src="<?php echo ROOT ?>assets/uploads/banner/<?php echo $item->img ?>" alt="<?php echo $item->title ?>" />
+				</li>
+			<?php endforeach ?>
+		<?php endif ?>
 	</ul>
 	<div class="swiper-pagination"></div>
 </section>

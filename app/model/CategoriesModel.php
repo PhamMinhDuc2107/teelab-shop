@@ -1,9 +1,10 @@
 <?php 
 
-class CategoriesModel
+class CategoriesModel extends Model
 {
-	use Model;
-	private $table = "categories";
+	protected $table = "categories";
+	protected $allowedColumns =["id", "title", "slug", "status"];
+
 	public function getCategories() 
 	{
 		$result = $this->findAll();

@@ -28,7 +28,7 @@
 	<section class="wrapper">
 		<?php require_once './app/view/client/blocks/header.view.php'; ?>
 		<?php 
-		if($data['page'])
+		if(isset($data['page']))
 		{
 			require_once "./app/view/client/pages/$data[page].view.php";
 		}

@@ -6,7 +6,6 @@ class Categories extends Controller
 	public function __construct() 
 	{
 		$this->CategoriesModel = $this->model("CategoriesModel");
-		checkLogin();
 	}
 	public function index() 
 	{
@@ -36,7 +35,7 @@ class Categories extends Controller
 			$name = isset($_POST['name']) ? $_POST['name'] : "";
 			$slug = isset($_POST['slug']) ? $_POST['slug'] : "";
 			$status = isset($_POST['status']) ? 1 : 0;
-			$data = ["name" => $name, "slug" => $slug,"status" => $status];
+			$data = ["title" => $name, "slug" => $slug,"status" => $status];
 			if($this->CategoriesModel->insert($data)) 
 			{
 				$messager['mes'] = "Thêm danh mục sản phẩm thành công!";
@@ -65,7 +64,7 @@ class Categories extends Controller
 			$name = isset($_POST['name']) ? $_POST['name'] : "";
 			$slug = isset($_POST['slug']) ? $_POST['slug'] : "";
 			$status = isset($_POST['status']) ? 1 : 0;
-			$data = ["name" => $name, "slug" => $slug,"status" => $status];
+			$data = ["title" => $name, "slug" => $slug,"status" => $status];
 			if($this->CategoriesModel->update($id, $data)) { 
 				$messager['mes'] = "Sưa danh mục sản phẩm thành công!";
 				redirect('categories?msg='.urldecode(serialize($messager)));

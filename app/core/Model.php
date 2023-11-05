@@ -1,5 +1,5 @@
 <?php 
-Trait Model
+class Model
 {
    use Database;
    public $limit     = 10;
@@ -13,7 +13,11 @@ Trait Model
       $query = "select * from $this->table order by $this->order_column $this->order_type limit $this->limit offset $this->offset";
       return $this->query($query);
    }
-
+   public function insert_get_id($data) {
+      $query = $this->insret_shared($data);
+      $id = $this->query_id($query, $data);
+      return $id;
+   }
    public function where($data, $data_not = [])
    {
       $keys = array_keys($data);
@@ -27,7 +31,7 @@ Trait Model
       foreach ($keys_not as $key) {
          $query .= $key . " != :". $key . " && ";
       }
-      
+
       $query = trim($query," && ");
 
       $query .= " order by $this->order_column $this->order_type limit $this->limit offset $this->offset";
@@ -49,12 +53,12 @@ Trait Model
       foreach ($keys_not as $key) {
          $query .= $key . " != :". $key . " && ";
       }
-      
+
       $query = trim($query," && ");
 
       $query .= " limit $this->limit offset $this->offset";
       $data = array_merge($data, $data_not);
-      
+
       $result = $this->query($query, $data);
       if($result)
          return $result[0];
@@ -66,20 +70,7 @@ Trait Model
    {
 
       /** remove unwanted data **/
-      if(!empty($this->allowedColumns))
-      {
-         foreach ($data as $key => $value) {
-
-            if(!in_array($key, $this->allowedColumns))
-            {
-               unset($data[$key]);
-            }
-         }
-      }
-
-      $keys = array_keys($data);
-
-      $query = "insert into $this->table (".implode(",", $keys).") values (:".implode(",:", $keys).")";
+      $query = $this->insret_shared($data);
       if(empty($this->query($query, $data))){
          return true;
       }
@@ -126,5 +117,22 @@ Trait Model
          return true;
       }
       return false;
+   }
+   public function insret_shared($data) 
+   {
+      if(!empty($this->allowedColumns))
+      {
+         foreach ($data as $key => $value) {
+
+            if(!in_array($key, $this->allowedColumns))
+            {
+               unset($data[$key]);
+            }
+         }
+      }
+      $keys = array_keys($data);
+
+      $query = "insert into $this->table (".implode(",", $keys).") values (:".implode(",:", $keys).")";
+      return $query;
    }
 }

@@ -1,9 +1,9 @@
 <?php 
 
-class AdminModel
+class AdminModel extends Model
 {
-	use Model;
-	private $table = "admin";
+	protected $table = "admin";
+	protected $allowedColumns =["id", "username", "password", "email"];
 }
 
 ?>
