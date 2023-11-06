@@ -9,12 +9,36 @@ class Admin extends Controller
 	}
 	public function index()
 	{
+		if(isset($_GET['page']) && $_GET['page'] !== "")
+		{
+			$this->AdminModel->offset = $_GET['page'];
+		}
+		if(isset($_GET['col']) && $_GET['col'] !== "") {
+			$this->AdminModel->order_column = $_GET['col'];
+		}
+		if(isset($_GET['order']) && $_GET['order'] !== "") {
+			$this->AdminModel->order_type = $_GET['order'];
+		}
+		if(isset($_GET['q']) && $_GET['q'] !== "") 
+		{
+			$q = $_GET['q'];
+			$col_name = ['username', "email"];
+			$admin = $this->AdminModel->getDataSearch($col_name, $q);
+		}else 
+		{
+			$admin = $this->AdminModel->findAll();
+		}
+		$count = $this->AdminModel->getTotalRecords();
+		$limit = $this->AdminModel->limit;
+		$per_page = ceil($count/$limit);
 		$admin = $this->AdminModel->findAll();
 		$this->view("cpanel/layout", [
 			"title" => "List Admin - Dashboard",
 			"page"=>"admin/index",
 			"heading" => "Admin",
 			"data"=>$admin,
+			"pagination" => $per_page,
+			"col" => $this->AdminModel->allowedColumns,
 		]);
 	}
 	public function add_admin() 

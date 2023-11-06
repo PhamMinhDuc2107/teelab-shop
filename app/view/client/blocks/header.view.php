@@ -242,7 +242,7 @@
             <?php foreach ($categories as $item) :?>
                <li class="header__menu--item">
                   <a href="<?php echo ROOT.$item->slug ?>" class="header__menu--link"
-                     ><?php  echo $item->name  ?></a
+                     ><?php  echo $item->title  ?></a
                      >
                   </li>
                <?php endforeach; ?>

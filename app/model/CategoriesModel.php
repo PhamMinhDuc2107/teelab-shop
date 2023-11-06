@@ -3,7 +3,7 @@
 class CategoriesModel extends Model
 {
 	protected $table = "categories";
-	protected $allowedColumns =["id", "title", "slug", "status"];
+	public $allowedColumns =["id", "title", "slug", "status"];
 
 	public function getCategories() 
 	{

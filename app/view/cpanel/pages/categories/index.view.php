@@ -23,7 +23,7 @@ if(!empty($_GET['msg']))
       <?php foreach($data["data"] as $item) : ?>
         <tr>
           <th class="col-1"><?php echo $item->id ?></th>
-          <td class="col-4"><?php echo $item->name ?></td>
+          <td class="col-4"><?php echo $item->title ?></td>
           <td class="col-3"><?php echo $item->slug ?></td>
           <td class="col-2 text-center">
             <?php if($item->status == 1) 

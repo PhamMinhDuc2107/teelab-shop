@@ -46,7 +46,7 @@ if(!empty($_GET['msg']))
 						</div>
 					</td>
 				</tr>
-			<?php endforeach;  ?>
+			<?php endforeach; ?>
 		<?php endif; ?>
 	</tbody>
 </table>

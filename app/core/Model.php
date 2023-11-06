@@ -13,6 +13,23 @@ class Model
       $query = "select * from $this->table order by $this->order_column $this->order_type limit $this->limit offset $this->offset";
       return $this->query($query);
    }
+   public function getTotalRecords() 
+   {
+      $query = "select * from $this->table";
+      $result = $this->query($query);
+      $count = count($result);
+      return $count;
+   }
+   public function getDataSearch(array $col_name,string $q) {
+      $query = "select * from $this->table where ";
+      foreach($col_name as $item) 
+      {
+         $query.= $item." like "."\"%$q%\""." or ";
+      }
+      $query = trim($query, " or ");
+      $query .= " order by $this->order_column $this->order_type limit $this->limit offset $this->offset";
+      return $this->query($query, []);
+   }
    public function insert_get_id($data) {
       $query = $this->insret_shared($data);
       $id = $this->query_id($query, $data);

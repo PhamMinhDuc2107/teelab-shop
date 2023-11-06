@@ -2,7 +2,7 @@
 class BannerModel extends Model
 {
 	protected $table = "banner";
-	protected $allowedColumns =["id", "title", "img", "status"];
+	public $allowedColumns =["id", "title", "img", "status"];
 
 }
 ?>

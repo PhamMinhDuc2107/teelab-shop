@@ -2,19 +2,43 @@
 class Banner extends Controller 
 {
 	private $BannerModel;
-
 	public function __construct() 
 	{
 		$this->BannerModel = $this->model("BannerModel");
 	}
 	public function index()
 	{
-		$banner = $this->BannerModel->findAll();
+		if(isset($_GET['page']) && $_GET['page'] !== "")
+		{
+			$this->BannerModel->offset = $_GET['page'];
+		}
+		if(isset($_GET['col']) && $_GET['col'] !== "") {
+			$this->BannerModel->order_column = $_GET['col'];
+		}
+		if(isset($_GET['order']) && $_GET['order'] !== "") {
+			$this->BannerModel->order_type = $_GET['order'];
+		}
+		if(isset($_GET['q']) && $_GET['q'] !== "") 
+		{
+			$q = $_GET['q'];
+			$col_name = ['title'];
+			$banner = $this->BannerModel->getDataSearch($col_name, $q);
+
+		}else 
+		{
+			$banner = $this->BannerModel->findAll();
+
+		}
+		$count = $this->BannerModel->getTotalRecords();
+		$limit = $this->BannerModel->limit;
+		$per_page = ceil($count/$limit);
 		$this->view("cpanel/layout", [
 			"title" => "List Banner - Dashboard",
 			"page"=>"banner/index",
 			"heading" => "Banner",
 			"data"=>$banner,
+			"pagination" => $per_page,
+			"col" => $this->BannerModel->allowedColumns,
 		]);
 	}
 	public function add_banner() 

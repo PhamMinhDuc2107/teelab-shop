@@ -22,16 +22,16 @@ function checkLogin()
 function unique_img($name) 
 {
    $img = isset($_FILES[$name]) ? $_FILES[$name]['name'] :"";
+   show($img);
    $div = explode(".", $img);
    $file_ext = strtolower(end($div));
    $unique_img = $div[0].time().".".$file_ext;
    return $unique_img;
 }
-function upload_list_img (string $path, string $name,int $bytes = 2000000 ,array $rule = ["jpg", "jpeg","webp"]) 
+
+function upload_list_img (string $path, string $name) 
 {
    if(isset($_FILES)) {
-      $extension = $rule;
-      $bytes = $bytes ;
       $path = $path;
       $urlImgs = [];
       foreach ($_FILES[$name]['tmp_name'] as $key =>$value) {
@@ -43,9 +43,12 @@ function upload_list_img (string $path, string $name,int $bytes = 2000000 ,array
          array_push($urlImgs,$unique_img);
          move_uploaded_file($tmp_img,$path.$unique_img);
       }
-      show($urlImgs);
    }
    return count($urlImgs) > 0 ? $urlImgs : null;
+}
+function remove_list_img($a)
+{
+
 }
 function delete_img($path) 
 {

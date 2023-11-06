@@ -31,22 +31,26 @@
         <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">
             <div id="content">
-             <?php require_once  './app/view/cpanel/blocks/header.view.php';?>
+               <?php require_once  './app/view/cpanel/blocks/header.view.php';?>
 
-             <!-- Begin Page Content -->
-             <div class="container-fluid">
+               <!-- Begin Page Content -->
+               <div class="container-fluid">
                 <!-- Page Heading -->
                 <div class="d-sm-flex align-items-center justify-content-between mb-4">
                     <h1 class="h3 mb-0 text-gray-800"><?php echo $data['heading'] ? $data['heading'] : "" ?></h1>
                 </div>
-                <?php 
-                 if($data['page']) {
+                <?php if(isset($data['pagination']))
+                    require_once  "./app/view/cpanel/blocks/sortbar.view.php";
+                ?>
+                <?php if(isset($data['page'])) {
                     require_once  "./app/view/cpanel/pages/$data[page].view.php";
-                }
-            ?>
+                }?>
+                <?php if(isset($data['pagination']))
+                    require_once  "./app/view/cpanel/blocks/pagination.view.php";
+                ?>
+            </div>
         </div>
     </div>
-</div>
 </div>
 
 <!-- Bootstrap core JavaScript-->
@@ -63,7 +67,39 @@
 <!-- Page level custom scripts -->
 <script src="<?php echo ROOT ?>assets/admin/js/demo/chart-area-demo.js"></script>
 <script src="<?php echo ROOT ?>assets/admin/js/demo/chart-pie-demo.js"></script>
+<script>
+    const sort = document.querySelector(".sortBar-select");
+    sort.addEventListener("change", handlerOnchange);
+    function handlerOnchange(e) {
+        const order = e.target.value;
+        updateURL(order);
+    }
+    const sortCol = document.querySelector(".sortBar-col");
+    sortCol.addEventListener("change", handlerOnchangeCol);
+    function handlerOnchangeCol(e) {
+        const col = e.target.value;
+        updateURL(undefined, col, undefined);
+    }
+    const page = document.querySelector(".pagination")
+    page.addEventListener("click", function(e) {
+        let page = +e.target.dataset.id;
+        updateURL(undefined,undefined,page);
+    })
+    function updateURL(order, col, page) {
+        const url = new URL(window.location.href);
 
+        if (order !== undefined) {
+            url.searchParams.set('order', order);
+        }
+        if (col !== undefined) {
+            url.searchParams.set('col', col);
+        }
+        if(page !== undefined) {
+            url.searchParams.set('page', page);
+        } 
+        window.location.href = url;
+    }
+</script>
 </body>
 
 </html>

@@ -9,12 +9,36 @@ class Categories extends Controller
 	}
 	public function index() 
 	{
-		$categories = $this->CategoriesModel->getCategories();
+		if(isset($_GET['page']) && $_GET['page'] !== "")
+		{
+			$this->CategoriesModel->offset = $_GET['page'];
+		}
+		if(isset($_GET['col']) && $_GET['col'] !== "") {
+			$this->CategoriesModel->order_column = $_GET['col'];
+		}
+		if(isset($_GET['order']) && $_GET['order'] !== "") {
+			$this->CategoriesModel->order_type = $_GET['order'];
+		}
+		if(isset($_GET['q']) && $_GET['q'] !== "") 
+		{
+			$q = $_GET['q'];
+			$col_name = ['title', "slug"];
+			$categories = $this->CategoriesModel->getDataSearch($col_name, $q);
+		}else 
+		{
+			$categories = $this->CategoriesModel->findAll();
+		}
+		$count = $this->CategoriesModel->getTotalRecords();
+		$limit = $this->CategoriesModel->limit;
+		$per_page = ceil($count/$limit);
 		$this->view("cpanel/layout", [
 			"title" => "List - Categories",
 			"page"=>"categories/index",
 			"heading" => "Categories",
-			"data" => $categories
+			"data" => $categories,
+			"pagination" => $per_page,
+			"col" => $this->CategoriesModel->allowedColumns,
+
 		]);
 	}	
 	public function add_category() 
