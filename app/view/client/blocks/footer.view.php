@@ -99,41 +99,41 @@
                <h3 class="footer__item--title">About Us</h3>
                <ul class="footer__nav--list">
                   <li class="footer__nav--item">
-                     <a href="./home.html" class="footer__nav--link"
-                     >Trang chủ</a
-                     >
-                  </li>
-                  <li class="footer__nav--item">
-                     <a href="./product.html" class="footer__nav--link"
-                     >Tất cả sản phẩm</a
-                     >
-                  </li>
-                  <li class="footer__nav--item">
-                     <a href="./policy.html" class="footer__nav--link"
-                     >Chính sách đổi trả</a
-                     >
-                  </li>
-                  <li class="footer__nav--item">
-                     <a href="./size.html" class="footer__nav--link"
-                     >Bảng Size</a
-                     >
-                  </li>
-                  <li class="footer__nav--item">
-                     <a
-                     href="./checkOrder.html"
-                     class="footer__nav--link"
-                     >Kiểm tra đơn hàng</a
-                     >
-                  </li>
-                  <li class="footer__nav--item">
-                     <a href="./store.html" class="footer__nav--link"
-                     >Hệ thống Cửa hàng</a
-                     >
-                  </li>
-               </ul>
-            </div>
-         </div>
-      </div>
-   </div>
-</div>
+                     <a href="<?php echo ROOT ?>" class="footer__nav--link"
+                        >Trang chủ</a
+                        >
+                     </li>
+                     <li class="footer__nav--item">
+                        <a href="<?php echo ROOT."sanpham" ?>" class="footer__nav--link"
+                           >Tất cả sản phẩm</a
+                           >
+                        </li>
+                        <li class="footer__nav--item">
+                           <a href="<?php echo ROOT."chinhsach" ?>" class="footer__nav--link"
+                              >Chính sách đổi trả</a
+                              >
+                           </li>
+                           <li class="footer__nav--item">
+                              <a href="<?php echo ROOT."bangsize" ?>" class="footer__nav--link"
+                                 >Bảng Size</a
+                                 >
+                              </li>
+                              <li class="footer__nav--item">
+                                 <a
+                                 href="<?php echo ROOT."checkOrder" ?>"
+                                 class="footer__nav--link"
+                                 >Kiểm tra đơn hàng</a
+                                 >
+                              </li>
+                              <li class="footer__nav--item">
+                                 <a href="<?php echo ROOT."hethongcuahang" ?>" class="footer__nav--link"
+                                    >Hệ thống Cửa hàng</a
+                                    >
+                                 </li>
+                              </ul>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
          <!-- /footer -->

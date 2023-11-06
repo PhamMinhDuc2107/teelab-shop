@@ -31,253 +31,62 @@
 <!-- product -->
 <section class="section__product mt-0">
 	<div class="container">
-		<h3 class="product__title"><a href="#">Áo thun</a></h3>
-		<div class="product__list">
-			<div class="product__item">
-				<div class="product__item--img">
-					<img
-					src="<?php echo ROOT ?>assets/client/images/ao thun den size to.webp"
-					alt=""
-					/>
-					<div class="product__item--sale">-40%</div>
-					<div class="overplay__hover">
-						<img
-						src="<?php echo ROOT ?>assets/client/images/shopping-cart-fast-moving-svgrepo-com.svg"
-						alt=""
-						/>
+		<?php $data_total = isset($data['data']) ? $data['data'] : "";?>
+		<?php foreach($data_total as $item): ?>
+			<div class="product__container">
+
+				<h3 class="product__title">
+					<a href="
+					<?php echo isset($item['category']) ?  ROOT.$item['category']->slug  : ''?>"><?php echo isset($item['category']) ? $item['category']->title  : ""?></a>
+				</h3>
+				<div class="product__list">
+					<?php if(isset($item['products'])) :?>
+						<?php foreach($item['products'] as $product ) :?>
+							<div class="product__item">
+								<div class="product__item--img">
+									<img src="<?php echo isset($product) ? ASSET."/uploads/product/".$product->img : "" ?>" alt="" />
+									<div class="product__item--sale">-<?php echo isset($product) ? $product->discount :"" ?>%</div>
+									<div class="overplay__hover">
+										<img
+										src="<?php echo ROOT ?>assets/client/images/shopping-cart-fast-moving-svgrepo-com.svg"
+										alt=""
+										/>
+									</div>
+								</div>
+								<div class="product__img--detail">
+									<img
+									src="<?php echo isset($product) ? ASSET."uploads/product/".$product->img: "" ?>"
+									alt=""
+									/>
+								</div>
+								<div class="product__info">
+									<a
+									href=""
+									class="product__info--name"
+									><span
+									><?php echo isset($product) ? $product->name : "" ?></span
+									></a
+									>
+									<div class="product__price">
+										<span class="product__price--new">
+											<?php $price_item = isset($product) ? $product->price - ($product->price * $product->discount / 100) : "" ;
+											?>
+											<?php echo isset($product) ? number_format($price_item)."đ" : "" ?>
+										</span>
+										<span class="product__price--old"><?php echo isset($product) ? number_format($product->price)."đ" : ""?></span>
+									</div>
+								</div>
+							</div>
+						<?php endforeach ?>
+					<?php endif; ?>
+					<div class="product__item more">
+						<a href="<?php echo isset($item['category']) ? ROOT.$item['category']->slug : "" ?>" class="product__item--more"> Xem thêm </a>
 					</div>
 				</div>
-				<div class="product__img--detail">
-					<img
-					src="<?php echo ROOT ?>assets/client/images/ao thun den size to.webp"
-					alt=""
-					/>
-				</div>
-				<div class="product__info">
-					<a
-					href="./productDetail.html"
-					class="product__info--name"
-					>
-					<span
-					>Áo Thun Teelab Local Brand Unisex The Eyes
-					T-Shirt TS206 Lorem ipsum dolor sit, amet
-					consectetur adipisicing elit. Facilis, neque a.
-					Impedit sed architecto veniam necessitatibus
-					earum, nisi libero, autem dolore excepturi fugit
-					dicta? Veritatis obcaecati maiores ex recusandae
-					qui!</span
-					>
-				</a>
-				<div class="product__price">
-					<span class="product__price--new">150.000đ</span>
-					<span class="product__price--old">250.000đ</span>
-				</div>
+				<a href="<?php echo ROOT.$item['category']->slug ?>" class="product__more">Xem thêm</a>
 			</div>
-		</div>
-		<div class="product__item">
-			<div class="product__item--img">
-				<img src="<?php echo ROOT ?>assets/client/images/Áo gấu to.webp" alt="" />
-				<div class="product__item--sale">-40%</div>
-				<div class="overplay__hover">
-					<img
-					src="<?php echo ROOT ?>assets/client/images/shopping-cart-fast-moving-svgrepo-com.svg"
-					alt=""
-					/>
-				</div>
-			</div>
-			<div class="product__img--detail">
-				<img
-				src="<?php echo ROOT ?>assets/client/images/ao thun den size to.webp"
-				alt=""
-				/>
-			</div>
-			<div class="product__info">
-				<a
-				href="./productDetail.html"
-				class="product__info--name"
-				><span
-				>Áo Thun Teelab Local Brand Unisex The Eyes
-				T-Shirt TS206</span
-				></a
-				>
-				<div class="product__price">
-					<span class="product__price--new">150.000đ</span>
-					<span class="product__price--old">250.000đ</span>
-				</div>
-			</div>
-		</div>
-		<div class="product__item">
-			<div class="product__item--img">
-				<img src="<?php echo ROOT ?>assets/client/images/Áo mèo to.webp" alt="" />
-				<div class="product__item--sale">-40%</div>
-				<div class="overplay__hover">
-					<img
-					src="<?php echo ROOT ?>assets/client/images/shopping-cart-fast-moving-svgrepo-com.svg"
-					alt=""
-					/>
-				</div>
-			</div>
-			<div class="product__img--detail">
-				<img
-				src="<?php echo ROOT ?>assets/client/images/ao thun den size to.webp"
-				alt=""
-				/>
-			</div>
-			<div class="product__info">
-				<a
-				href="./productDetail.html"
-				class="product__info--name"
-				><span
-				>Áo Thun Teelab Local Brand Unisex The Eyes
-				T-Shirt TS206</span
-				></a
-				>
-				<div class="product__price">
-					<span class="product__price--new">150.000đ</span>
-					<span class="product__price--old">250.000đ</span>
-				</div>
-			</div>
-		</div>
-		<div class="product__item">
-			<div class="product__item--img">
-				<img
-				src="<?php echo ROOT ?>assets/client/images/Áo thun trắng size to.webp"
-				alt=""
-				/>
-				<div class="product__item--sale">-40%</div>
-				<div class="overplay__hover">
-					<img
-					src="<?php echo ROOT ?>assets/client/images/shopping-cart-fast-moving-svgrepo-com.svg"
-					alt=""
-					/>
-				</div>
-			</div>
-			<div class="product__img--detail">
-				<img
-				src="<?php echo ROOT ?>assets/client/images/ao thun den size to.webp"
-				alt=""
-				/>
-			</div>
-			<div class="product__info">
-				<a
-				href="./productDetail.html"
-				class="product__info--name"
-				><span
-				>Áo Thun Teelab Local Brand Unisex The Eyes
-				T-Shirt TS206</span
-				></a
-				>
-				<div class="product__price">
-					<span class="product__price--new">150.000đ</span>
-					<span class="product__price--old">250.000đ</span>
-				</div>
-			</div>
-		</div>
-		<div class="product__item">
-			<div class="product__item--img">
-				<img src="<?php echo ROOT ?>assets/client/images/Áo kẻ viền to.webp" alt="" />
-				<div class="product__item--sale">-40%</div>
-				<div class="overplay__hover">
-					<img
-					src="<?php echo ROOT ?>assets/client/images/shopping-cart-fast-moving-svgrepo-com.svg"
-					alt=""
-					/>
-				</div>
-			</div>
-			<div class="product__img--detail">
-				<img
-				src="<?php echo ROOT ?>assets/client/images/ao thun den size to.webp"
-				alt=""
-				/>
-			</div>
-			<div class="product__info">
-				<a
-				href="./productDetail.html"
-				class="product__info--name"
-				><span
-				>Áo Thun Teelab Local Brand Unisex The Eyes
-				T-Shirt TS206</span
-				></a
-				>
-				<div class="product__price">
-					<span class="product__price--new">150.000đ</span>
-					<span class="product__price--old">250.000đ</span>
-				</div>
-			</div>
-		</div>
-		<div class="product__item">
-			<div class="product__item--img">
-				<img src="<?php echo ROOT ?>assets/client/images/áo trắng  to.webp" alt="" />
-				<div class="product__item--sale">-40%</div>
-				<div class="overplay__hover">
-					<img
-					src="<?php echo ROOT ?>assets/client/images/shopping-cart-fast-moving-svgrepo-com.svg"
-					alt=""
-					/>
-				</div>
-			</div>
-			<div class="product__img--detail">
-				<img
-				src="<?php echo ROOT ?>assets/client/images/ao thun den size to.webp"
-				alt=""
-				/>
-			</div>
-			<div class="product__info">
-				<a
-				href="./productDetail.html"
-				class="product__info--name"
-				><span
-				>Áo Thun Teelab Local Brand Unisex The Eyes
-				T-Shirt TS206</span
-				></a
-				>
-				<div class="product__price">
-					<span class="product__price--new">150.000đ</span>
-					<span class="product__price--old">250.000đ</span>
-				</div>
-			</div>
-		</div>
-		<div class="product__item">
-			<div class="product__item--img">
-				<img
-				src="<?php echo ROOT ?>assets/client/images/Áo Xmas trắng to.webp"
-				alt=""
-				/>
-				<div class="product__item--sale">-40%</div>
-				<div class="overplay__hover">
-					<img
-					src="<?php echo ROOT ?>assets/client/images/shopping-cart-fast-moving-svgrepo-com.svg"
-					alt=""
-					/>
-				</div>
-			</div>
-			<div class="product__img--detail">
-				<img
-				src="<?php echo ROOT ?>assets/client/images/ao thun den size to.webp"
-				alt=""
-				/>
-			</div>
-			<div class="product__info">
-				<a
-				href="./productDetail.html"
-				class="product__info--name"
-				><span
-				>Áo Thun Teelab Local Brand Unisex The Eyes
-				T-Shirt TS206</span
-				></a
-				>
-				<div class="product__price">
-					<span class="product__price--new">150.000đ</span>
-					<span class="product__price--old">250.000đ</span>
-				</div>
-			</div>
-		</div>
-		<div class="product__item more">
-			<a class="product__item--more"> Xem thêm </a>
-		</div>
+		<?php endforeach; ?>
 	</div>
-	<a class="product__more">Xem thêm</a>
-</div>
 </section>
 <!-- /product -->
 <!-- feedback -->

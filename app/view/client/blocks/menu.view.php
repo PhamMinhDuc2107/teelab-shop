@@ -9,37 +9,34 @@
       <h3 class="menu__title">Menu</h3>
 
       <li class="menu__item">
-         <a href="./home.html" class="menu__item--link"> Trang chủ </a>
+         <a href="<?php echo ROOT ?>" class="menu__item--link"> Trang chủ </a>
       </li>
       <li class="menu__item">
-         <a href="./product.html" class="menu__item--link"
-         >Tất cả sản phẩm
-      </a>
-      <ul class="menu2">
-         <li><a href="">Áo thun</a></li>
-         <li><a href="">Baby Tee</a></li>
-         <li><a href="">Áo polo</a></li>
-         <li><a href="">Áo sơ mi</a></li>
-         <li><a href="">Áo khoác</a></li>
-         <li><a href="">Áo Hoodie</a></li>
-         <li><a href=""> Quần </a></li>
-         <li><a href=""> Phụ kiện </a></li>
-      </ul>
-   </li>
-   <li class="menu__item">
-      <a href="./policy.html" class="menu__item--link">
-         Chính sách đổi trả
-      </a>
-   </li>
-   <li class="menu__item">
-      <a href="" class="menu__item--link"> Bảng size </a>
-   </li>
-   <li class="menu__item">
-      <a href="" class="menu__item--link"> Kiểm tra đơn hàng </a>
-   </li>
-   <li class="menu__item">
-      <a href="" class="menu__item--link"> Hệ thống cửa hàng </a>
-   </li>
-</ul>
+         <a href="<?php echo ROOT ?>sanpham" class="menu__item--link"
+            >Tất cả sản phẩm
+         </a>
+         <ul class="menu2">
+            <?php if(isset($data['categorie_actives'])) :?>
+               <?php foreach($data['categorie_actives'] as $item) :?>
+                  <li><a href="<?php ROOT."sanpham/".$item->slug ?>"><?php echo $item->title ?></a></li>
+               <?php endforeach ?>
+            <?php endif; ?>
+         </ul>
+      </li>
+      <li class="menu__item">
+         <a href="<?php echo ROOT."chinhsach" ?>" class="menu__item--link">
+            Chính sách đổi trả
+         </a>
+      </li>
+      <li class="menu__item">
+         <a href="<?php echo ROOT."bangsize" ?>" class="menu__item--link"> Bảng size </a>
+      </li>
+      <li class="menu__item">
+         <a href="<?php echo ROOT."kiemtradonhang" ?>" class="menu__item--link"> Kiểm tra đơn hàng </a>
+      </li>
+      <li class="menu__item">
+         <a href="<?php echo ROOT."hethongcuahang" ?>" class="menu__item--link"> Hệ thống cửa hàng </a>
+      </li>
+   </ul>
 </section>
       <!-- menu -->

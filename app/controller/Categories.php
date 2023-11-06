@@ -6,6 +6,7 @@ class Categories extends Controller
 	public function __construct() 
 	{
 		$this->CategoriesModel = $this->model("CategoriesModel");
+		$GLOBALS['categories'] = $this->CategoriesModel->findAll();
 	}
 	public function index() 
 	{

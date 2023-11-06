@@ -214,42 +214,42 @@
                </a>
             </li>
             <li class="nav__item">
-               <a href="./policy.html" class="nav__item--link"
-               >Chính sách đổi trả
-            </a>
-         </li>
-         <li class="nav__item">
-            <a href="<?php echo ROOT ?>" class="nav__item--link">
-               <img src="<?php echo ROOT ?>assets/client/images/logo.webp" alt="" />
-            </a>
-         </li>
-         <li class="nav__item">
-            <a href="./size.html" class="nav__item--link">
-               Bảng size
-            </a>
-         </li>
-         <li class="nav__item">
-            <a href="./store.html" class="nav__item--link">
-               Hệ thống cửa hàng
-            </a>
-         </li>
-      </ul>
-      <!-- nav -->
-      <!--header__menu -->
-      <ul class="header__menu">
-         <?php $categories = isset($data['dataCategories']) ? $data['dataCategories'] : "" ?>
-         <?php if(isset($categories)) :?>
-            <?php foreach ($categories as $item) :?>
-               <li class="header__menu--item">
-                  <a href="<?php echo ROOT.$item->slug ?>" class="header__menu--link"
-                     ><?php  echo $item->title  ?></a
-                     >
-                  </li>
-               <?php endforeach; ?>
-            <?php endif;?>
+               <a href="<?php echo ROOT.'chinhsach' ?>" class="nav__item--link"
+                  >Chính sách đổi trả
+               </a>
+            </li>
+            <li class="nav__item">
+               <a href="<?php echo ROOT ?>" class="nav__item--link">
+                  <img src="<?php echo ROOT ?>assets/client/images/logo.webp" alt="" />
+               </a>
+            </li>
+            <li class="nav__item">
+               <a href="<?php echo ROOT.'bangsize' ?>" class="nav__item--link">
+                  Bảng size
+               </a>
+            </li>
+            <li class="nav__item">
+               <a href="<?php echo ROOT."hethongcuahang" ?>" class="nav__item--link">
+                  Hệ thống cửa hàng
+               </a>
+            </li>
          </ul>
+         <!-- nav -->
          <!--header__menu -->
+         <ul class="header__menu">
+            <?php $categories = isset($data['dataCategories']) ? $data['dataCategories'] : "" ?>
+            <?php if(isset($categories)) :?>
+               <?php foreach ($categories as $item) :?>
+                  <li class="header__menu--item">
+                     <a href="<?php echo ROOT."sanpham/".$item->slug ?>" class="header__menu--link"
+                        ><?php  echo $item->title  ?></a
+                        >
+                     </li>
+                  <?php endforeach; ?>
+               <?php endif;?>
+            </ul>
+            <!--header__menu -->
+         </div>
       </div>
-   </div>
-</section>
+   </section>
          <!-- /header -->
