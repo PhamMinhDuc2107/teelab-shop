@@ -1,9 +1,10 @@
 <ul class="pagination">
 	<?php if(isset($data['pagination']) && $data['pagination'] > 1): ?>
 		<?php $pagination = $data['pagination'] ?>
-		<?php for($i = 0; $i < $pagination; $i++):?>
+		<?php for($i = 1; $i <= $pagination; $i++):?>
 			<li class="pagination-item" >
-				<a data-id="<?php echo $i ?>"  class="pagination-link"><?php echo $i+1 ?></a>
+				<a data-id="<?php echo $i ?>"  class="pagination-link 
+				<?php echo isset($_GET['page']) && +$_GET['page'] === $i ? "pagination-active" : ""?>"><?php echo $i ?></a>
 			</li>
 		<?php endfor; ?>
 	<?php endif; ?>
@@ -32,6 +33,7 @@
 		transition: all 0.3s linear;
 		text-decoration: none;
 	}
+	.pagination-active,
 	.pagination-link:hover{
 		background-color: #4e73df;
 		color: white;

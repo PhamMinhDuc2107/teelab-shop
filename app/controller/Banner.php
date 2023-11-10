@@ -5,22 +5,26 @@ class Banner extends Controller
 	public function __construct() 
 	{
 		$this->BannerModel = $this->model("BannerModel");
+		if(!getSession("login")) {
+				redirect("cpanel/login");
+		}
 	}
 	public function index()
 	{
+		
 		if(isset($_GET['page']) && $_GET['page'] !== "")
 		{
-			$this->BannerModel->offset = $_GET['page'];
+			$this->BannerModel->offset = (esc($_GET['page']) - 1 ) * $this->BannerModel->limit;
 		}
 		if(isset($_GET['col']) && $_GET['col'] !== "") {
-			$this->BannerModel->order_column = $_GET['col'];
+			$this->BannerModel->order_column =esc( $_GET['col']);
 		}
 		if(isset($_GET['order']) && $_GET['order'] !== "") {
-			$this->BannerModel->order_type = $_GET['order'];
+			$this->BannerModel->order_type = esc($_GET['order']);
 		}
 		if(isset($_GET['q']) && $_GET['q'] !== "") 
 		{
-			$q = $_GET['q'];
+			$q = esc($_GET['q']);
 			$col_name = ['title'];
 			$banner = $this->BannerModel->getDataSearch($col_name, $q);
 
@@ -43,6 +47,9 @@ class Banner extends Controller
 	}
 	public function add_banner() 
 	{
+		if(!getSession("login")) {
+			redirect("cpanel/login");
+		}
 		$this->view("cpanel/layout", [
 			"title" => "Add Banner - Dashboard",
 			"page"=>"banner/form_banner",
@@ -103,8 +110,8 @@ class Banner extends Controller
 				$path_upload = $path.$unique_img;
 				$data = ["title" => $title,"img" => $unique_img, "status" => $status];
 				if($this->BannerModel->update($id, $data)) { 
-					move_uploaded_file($tmp_img,$path_upload);
-					$messager['mes'] = "Sưa banner thành công!";
+					move_uploaded_file($file_tmp,$path_upload);
+					$messager['mes'] = "Sửa banner thành công!";
 					redirect('banner?msg='.urldecode(serialize($messager)));
 				}else {
 					$messager['mes'] = "Sửa banner không thành công!";

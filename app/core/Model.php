@@ -2,7 +2,7 @@
 class Model
 {
    use Database;
-   public $limit     = 10;
+   public $limit     = 12;
    public $offset       = 0;
    public $order_type   = "ASC";
    public $order_column = "id";
@@ -19,6 +19,23 @@ class Model
       $result = $this->query($query);
       $count = count($result);
       return $count;
+   }
+   public function getSearchTotalRecords(array $col_name, $q, array $condition = [] ) 
+   {
+      $query = "select count(*) from $this->table where ";
+      if(!empty($condition)) 
+      {
+         foreach($condition as $key => $value)
+         {
+            $query .= $key ."= :".$key ." AND ";
+         }
+      }
+      foreach($col_name as $item) 
+      {
+         $query.= $item." like "."\"%$q%\""." or ";
+      }
+      $query = trim($query, " or ");
+      return $this->query($query, $condition);
    }
    public function getDataSearch(array $col_name,string $q) {
       $query = "select * from $this->table where ";

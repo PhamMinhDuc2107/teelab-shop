@@ -6,22 +6,26 @@ class Admin extends Controller
 	public function __construct() 
 	{
 		$this->AdminModel = $this->model("AdminModel");
+		if(!getSession("login")) {
+				redirect("cpanel/login");
+		}
 	}
 	public function index()
 	{
 		if(isset($_GET['page']) && $_GET['page'] !== "")
 		{
-			$this->AdminModel->offset = $_GET['page'];
+			$this->AdminModel->offset = (esc($_GET['page']) - 1 ) * $this->AdminModel->limit;
+
 		}
 		if(isset($_GET['col']) && $_GET['col'] !== "") {
-			$this->AdminModel->order_column = $_GET['col'];
+			$this->AdminModel->order_column =esc($_GET['col']);
 		}
 		if(isset($_GET['order']) && $_GET['order'] !== "") {
-			$this->AdminModel->order_type = $_GET['order'];
+			$this->AdminModel->order_type =esc($_GET['order']);
 		}
 		if(isset($_GET['q']) && $_GET['q'] !== "") 
 		{
-			$q = $_GET['q'];
+			$q = esc($_GET['q']);
 			$col_name = ['username', "email"];
 			$admin = $this->AdminModel->getDataSearch($col_name, $q);
 		}else 
@@ -105,6 +109,7 @@ class Admin extends Controller
 	}
 	public function delete_admin($id) 
 	{
+		
 		if($this->AdminModel->delete($id)) 
 		{
 			$messager['mes'] = "Xoá admin thành công!";

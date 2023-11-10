@@ -12,13 +12,13 @@
          <a href="<?php echo ROOT ?>" class="menu__item--link"> Trang chủ </a>
       </li>
       <li class="menu__item">
-         <a href="<?php echo ROOT ?>sanpham" class="menu__item--link"
+         <a href="<?php echo ROOT ?>sanpham/all" class="menu__item--link"
             >Tất cả sản phẩm
          </a>
          <ul class="menu2">
-            <?php if(isset($data['categorie_actives'])) :?>
-               <?php foreach($data['categorie_actives'] as $item) :?>
-                  <li><a href="<?php ROOT."sanpham/".$item->slug ?>"><?php echo $item->title ?></a></li>
+            <?php if(isset($data['categories_actives'])) :?>
+               <?php foreach($data['categories_actives'] as $item) :?>
+                  <li><a href="<?php echo ROOT."sanpham/".$item->slug ?>"><?php echo $item->title ?></a></li>
                <?php endforeach ?>
             <?php endif; ?>
          </ul>

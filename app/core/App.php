@@ -1,8 +1,8 @@
 <?php 
 class App {
-   public $controller ='home';
-   public $action= 'index';
-   public $params =[];
+   private $controller ='home';
+   private $action= 'index';
+   private $params =[];
    function __construct () {
       $url = $this->progressUrl();
       if($url != null) {

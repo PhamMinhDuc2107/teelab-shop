@@ -15,14 +15,19 @@
 	rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
 	/>
+
 	<!-- swiper -->
 	<link
 	rel="stylesheet"
 	href="https://unpkg.com/swiper/swiper-bundle.min.css"
 	/>
 	<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+	<!-- toastr -->
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet">
 	<!-- css -->
 	<link rel="stylesheet" href="<?php echo ROOT  ?>assets/client/css/app.css" />
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 </head>
 <body>
 	<section class="wrapper">
@@ -37,6 +42,38 @@
 	</section>
 	<?php require_once './app/view/client/blocks/menu.view.php'; ?>
 </body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+<!-- Jquery -->
 <script src="<?php echo ROOT ?>assets/client/js/app.js"></script>
 <script src="<?php echo ROOT ?>assets/client/js/home.js"></script>
+<script>
+	const inputQuantity  = document.querySelector(".input__quantity");
+	if(inputQuantity){
+		inputQuantity.addEventListener("change", function(e) {
+			const quantity = e.target.value;
+			 var dataId = $('.input__quantity').data('id');
+			$.ajax({
+                url: 'http://localhost/shop-teelab/giohang/check_quantity_cart',
+                type: 'POST',
+					 dataType: 'json', 
+                data: {
+                    quantity:quantity,
+						  id:dataId,
+                },
+					 success: function (result) {
+						console.log(result)
+						const error = $(".quantity__error");
+						if(result.mes){
+							error.text(result.mes);
+							toastr.warning(`${result.mes}`)
+						}
+						$(".input__quantity").val(result.quantity);
+					},
+					 error:function () {
+						console.log("Lỗi")
+					 }
+            })
+		})
+	}
+</script>
 </html>

@@ -1,7 +1,7 @@
 <div class=" d-flex items-center justify-between bg-primary py-2 px-2 mb-2 rounded-lg gap-2 col-12">
 	<div class="d-flex items-center col-6">
 		<select class="sortBar-select">
-			<option>Sắp xếp</option>
+			<option selected value="">Sắp xếp</option>
 			<option <?php echo isset($_GET['order']) && $_GET['order'] === "asc" ? "selected" :"" ?> value="asc">Sắp xếp tăng dần</option>
 			<option <?php echo isset($_GET['order']) && $_GET['order'] === "desc" ? "selected" :"" ?>  value="desc">Sắp xếp giảm dần</option>
 		</select>

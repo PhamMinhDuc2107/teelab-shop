@@ -4,10 +4,15 @@ Trait Database
 
    private function connect()
    {
-      $string = "mysql:hostname=".DB_HOST.";dbname=".DB_NAME;
-      $con = new PDO($string,DB_USER,DB_PASS);
-      $con->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-      return $con;
+      try {
+         $string = "mysql:hostname=".DB_HOST.";dbname=".DB_NAME;
+         $con = new PDO($string,DB_USER,DB_PASS);
+         $con->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+         return $con;
+      }catch(PDOException $e)
+      {
+         echo "". $e->getMessage();
+      }
    }
 
    public function query($query, $data = [])

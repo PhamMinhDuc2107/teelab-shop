@@ -6,23 +6,25 @@ class Categories extends Controller
 	public function __construct() 
 	{
 		$this->CategoriesModel = $this->model("CategoriesModel");
-		$GLOBALS['categories'] = $this->CategoriesModel->findAll();
+		if(!getSession("login")) {
+				redirect("cpanel/login");
+		}
 	}
 	public function index() 
 	{
 		if(isset($_GET['page']) && $_GET['page'] !== "")
 		{
-			$this->CategoriesModel->offset = $_GET['page'];
+			$this->CategoriesModel->offset = (esc($_GET['page']) - 1 ) * $this->CategoriesModel->limit;
 		}
 		if(isset($_GET['col']) && $_GET['col'] !== "") {
-			$this->CategoriesModel->order_column = $_GET['col'];
+			$this->CategoriesModel->order_column = esc($_GET['col']);
 		}
 		if(isset($_GET['order']) && $_GET['order'] !== "") {
-			$this->CategoriesModel->order_type = $_GET['order'];
+			$this->CategoriesModel->order_type = esc($_GET['order']);
 		}
 		if(isset($_GET['q']) && $_GET['q'] !== "") 
 		{
-			$q = $_GET['q'];
+			$q = esc($_GET['q']);
 			$col_name = ['title', "slug"];
 			$categories = $this->CategoriesModel->getDataSearch($col_name, $q);
 		}else 
@@ -39,7 +41,6 @@ class Categories extends Controller
 			"data" => $categories,
 			"pagination" => $per_page,
 			"col" => $this->CategoriesModel->allowedColumns,
-
 		]);
 	}	
 	public function add_category() 

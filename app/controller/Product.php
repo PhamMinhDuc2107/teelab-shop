@@ -6,25 +6,29 @@ class Product extends Controller
 	private $CategoriesModel;
 	public function __construct() 
 	{
+		if(!getSession("login")) {
+				redirect("cpanel/login");
+		}
 		$this->ProductModel = $this->model("ProductModel");
 		$this->ProductImgModel = $this->model("ProductImgModel");
 		$this->CategoriesModel = $this->model("CategoriesModel");
+		
 	}
 	public function index() 
 	{
 		if(isset($_GET['page']) && $_GET['page'] !== "")
 		{
-			$this->ProductModel->offset = $_GET['page'];
+			$this->ProductModel->offset = (esc($_GET['page']) - 1 ) * $this->ProductModel->limit;
 		}
 		if(isset($_GET['col']) && $_GET['col'] !== "") {
-			$this->ProductModel->order_column = $_GET['col'];
+			$this->ProductModel->order_column = esc($_GET['col']);
 		}
 		if(isset($_GET['order']) && $_GET['order'] !== "") {
-			$this->ProductModel->order_type = $_GET['order'];
+			$this->ProductModel->order_type = esc($_GET['order']);
 		}
 		if(isset($_GET['q']) && $_GET['q'] !== "") 
 		{
-			$q = $_GET['q'];
+			$q = esc($_GET['q']);
 			$col_name = ['name', "category"];
 			$products = $this->ProductModel->getDataSearch($col_name, $q);
 		}else 

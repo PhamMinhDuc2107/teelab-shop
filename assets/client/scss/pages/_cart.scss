@@ -92,11 +92,14 @@
          width: 2.8rem;
          height: 2.8rem;
       }
-      & span {
-         border-top: 0.1rem solid $black-color;
-         border-bottom: 0.1rem solid $black-color;
+      & input {
+         text-align: center;
+         display: inline-block;
+         outline: none;
+         border: none;
+         border: 0.1rem solid $black-color;
          @include flex(center, center);
-         width: 3.5rem;
+         width: 4.5rem;
          height: 2.8rem;
       }
       & .cart__price {
@@ -107,6 +110,7 @@
       width: 33.33333%;
       margin-left: 66.66667%;
       margin-top: 2rem;
+      margin-bottom: 4rem;
       & .cart__price--total {
          display: flex;
          align-items: center;

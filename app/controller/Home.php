@@ -4,6 +4,7 @@ class Home extends Controller
 {
 	private $BannerModel;
 	private $CategoriesModel;
+	private $ProductModel;
 	public function __construct()
 	{
 		$this->BannerModel = $this->model("BannerModel");

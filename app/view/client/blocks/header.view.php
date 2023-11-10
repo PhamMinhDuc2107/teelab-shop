@@ -8,13 +8,13 @@
          <a href="<?php echo ROOT ?>" class="topbar__logo">
             <img src="<?php echo ROOT ?>assets/client/images/logo.webp" alt="" />
          </a>
-         <form class="topbar__search">
+         <form class="topbar__search" action="<?php echo ROOT."search"?>" method="get">
             <input
             type="text"
             name="search"
             placeholder="Tìm kiếm sản phẩm..."
             />
-            <button class="topbar__search--btn">
+            <button type="submit" class="topbar__search--btn">
                <i class="fa fa-search"></i>
             </button>
          </form>
@@ -22,184 +22,75 @@
             <div class="topbar__search--icon">
                <i class="fa fa-search"></i>
             </div>
-            <a href="./cart.html" class="topbar__cart">
+            <a href="<?php echo ROOT."giohang" ?>" class="topbar__cart">
                <div class="topbar__cart--icon">
                   <img src="<?php echo ROOT ?>assets/client/images/shopping.webp" alt="" />
                </div>
                <div class="topbar__cart--number">
-                  <span>0</span>
+                  <span><?php echo cartTotal() ?></span>
                </div>
                <!-- cart--mini -->
-               <form class="cart__mini">
+               <?php $carts = getSession("carts") ?>
+               <div class="cart__mini">
                   <div class="cart__mini--list">
-                     <div class="cart__mini--item">
-                        <a href="#" class="cart__mini--img">
-                           <img
-                           src="<?php echo ROOT ?>assets/client/images/áo thun bé 73.webp"
-                           alt=""
-                           />
-                        </a>
-                        <div class="cart__mini--content">
-                           <div class="cart__mini--name">
-                              <a href="#"
-                              >Áo Thun Teelab Local Brand Unisex
-                              Love Is In The Air TS199</a
-                              >
-                              <span>Kem / M</span>
-                           </div>
-                           <div class="cart__mini--grid">
-                              <div class="grid__item">
-                                 <span class="grid__item--name"
-                                 >Số lượng</span
+                     <?php if(!empty($carts) && is_array($carts)) :?>
+                     <?php foreach($carts as $cart) :?>
+                        <div class="cart__mini--item">
+                           <a href="#" class="cart__mini--img">
+                              <img
+                              src="<?php echo ASSET."uploads/product/".$cart['img'] ?>"
+                              alt=""
+                              />
+                           </a>
+                           <div class="cart__mini--content">
+                              <div class="cart__mini--name">
+                                 <a href="#"
+                                 ><?php echo $cart['name'] ?></a
                                  >
-                                 <div class="grid__item--quantity">
-                                    <i class="fa fa-minus"></i>
-                                    <span>0</span>
-                                    <i class="fa fa-plus"></i>
-                                 </div>
+                                 <span>Kem / M</span>
                               </div>
-                              <div class="grid__item">
-                                 <span class="grid__item--price"
-                                 >199.000đ</span
-                                 >
-                                 <a class="grid__item--remove">
-                                    Xoá
-                                 </a>
+                              <div class="cart__mini--grid">
+                                 <div class="grid__item">
+                                    <span class="grid__item--name"
+                                    >Số lượng</span
+                                    >
+                                    <div class="grid__item--quantity">
+                                       <input type="text" value="<?php echo $cart['quantity']?>" >
+                                    </div>
+                                 </div>
+                                 <div class="grid__item">
+                                    <span class="grid__item--price"
+                                    ><?php echo number_format($cart['price'] - ($cart['price'] * $cart['discount'] / 100)) ?>đ</span
+                                    >
+                                    <a href="<?php echo ROOT."giohang/remove_cart/".$cart["id"]?>" class="grid__item--remove">
+                                       Xoá
+                                    </a>
+                                 </div>
                               </div>
                            </div>
                         </div>
-                     </div>
-                     <div class="cart__mini--item">
-                        <a href="#" class="cart__mini--img">
-                           <img
-                           src="<?php echo ROOT ?>assets/client/images/áo thun bé 73.webp"
-                           alt=""
-                           />
-                        </a>
-                        <div class="cart__mini--content">
-                           <div class="cart__mini--name">
-                              <a href="#"
-                              >Áo Thun Teelab Local Brand Unisex
-                              Love Is In The Air TS199</a
-                              >
-                              <span>Kem / M</span>
-                           </div>
-                           <div class="cart__mini--grid">
-                              <div class="grid__item">
-                                 <span class="grid__item--name"
-                                 >Số lượng</span
-                                 >
-                                 <div class="grid__item--quantity">
-                                    <i class="fa fa-minus"></i>
-                                    <span>0</span>
-                                    <i class="fa fa-plus"></i>
-                                 </div>
-                              </div>
-                              <div class="grid__item">
-                                 <span class="grid__item--price"
-                                 >199.000đ</span
-                                 >
-                                 <a class="grid__item--remove">
-                                    Xoá
-                                 </a>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                     <div class="cart__mini--item">
-                        <a href="#" class="cart__mini--img">
-                           <img
-                           src="<?php echo ROOT ?>assets/client/images/áo thun bé 73.webp"
-                           alt=""
-                           />
-                        </a>
-                        <div class="cart__mini--content">
-                           <div class="cart__mini--name">
-                              <a href="#"
-                              >Áo Thun Teelab Local Brand Unisex
-                              Love Is In The Air TS199</a
-                              >
-                              <span>Kem / M</span>
-                           </div>
-                           <div class="cart__mini--grid">
-                              <div class="grid__item">
-                                 <span class="grid__item--name"
-                                 >Số lượng</span
-                                 >
-                                 <div class="grid__item--quantity">
-                                    <i class="fa fa-minus"></i>
-                                    <span>0</span>
-                                    <i class="fa fa-plus"></i>
-                                 </div>
-                              </div>
-                              <div class="grid__item">
-                                 <span class="grid__item--price"
-                                 >199.000đ</span
-                                 >
-                                 <a class="grid__item--remove">
-                                    Xoá
-                                 </a>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                     <div class="cart__mini--item">
-                        <a href="#" class="cart__mini--img">
-                           <img
-                           src="<?php echo ROOT ?>assets/client/images/áo thun bé 73.webp"
-                           alt=""
-                           />
-                        </a>
-                        <div class="cart__mini--content">
-                           <div class="cart__mini--name">
-                              <a href="#"
-                              >Áo Thun Teelab Local Brand Unisex
-                              Love Is In The Air TS199</a
-                              >
-                              <span>Kem / M</span>
-                           </div>
-                           <div class="cart__mini--grid">
-                              <div class="grid__item">
-                                 <span class="grid__item--name"
-                                 >Số lượng</span
-                                 >
-                                 <div class="grid__item--quantity">
-                                    <i class="fa fa-minus"></i>
-                                    <span>0</span>
-                                    <i class="fa fa-plus"></i>
-                                 </div>
-                              </div>
-                              <div class="grid__item">
-                                 <span class="grid__item--price"
-                                 >199.000đ</span
-                                 >
-                                 <a class="grid__item--remove">
-                                    Xoá
-                                 </a>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
+                     <?php endforeach; ?>
+                  <?php endif; ?>
+               </div>
+               <div class="cart__mini--bot">
+                  <div class="cart__mini--total">
+                     <span class="text">Tổng tiền:</span>
+                     <span class="number"><?php echo number_format(cartTotalPrice()) ?>đ</span>
                   </div>
-                  <div class="cart__mini--bot">
-                     <div class="cart__mini--total">
-                        <span class="text">Tổng tiền:</span>
-                        <span class="number">590.000đ</span>
-                     </div>
-                     <div class="cart__mini--btn">
-                        <button>Thanh toán</button>
-                     </div>
-                  </div>
-               </form>
-               <!-- /cart--mini -->
-            </a>
-         </div>
-         <div class="form-search">
-            <input type="text" placeholder="Tìm kiếm sản phẩm..." />
-            <button><i class="fa fa-search"></i></button>
-         </div>
+                  <a href="<?php echo ROOT.'checkout'?>" class="cart__mini--btn">
+                     <button>Thanh toán</button>
+                  </a>
+               </div>
+            </div>
+            <!-- /cart--mini -->
+         </a>
       </div>
+      <form method="get" action="<?php echo ROOT.'search'?>" class="form-search">
+         <input type="text" name="search" placeholder="Tìm kiếm sản phẩm..." />
+         <button type="submit"><i class="fa fa-search"></i></button>
+      </form>
    </div>
+</div>
 </section>
 <!-- /topbar -->
 <!-- header -->
@@ -238,7 +129,7 @@
          <!--header__menu -->
          <ul class="header__menu">
             <?php $categories = isset($data['dataCategories']) ? $data['dataCategories'] : "" ?>
-            <?php if(isset($categories)) :?>
+            <?php if(!empty($categories) && is_array($categories)) :?>
                <?php foreach ($categories as $item) :?>
                   <li class="header__menu--item">
                      <a href="<?php echo ROOT."sanpham/".$item->slug ?>" class="header__menu--link"

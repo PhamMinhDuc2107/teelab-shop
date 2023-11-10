@@ -13,12 +13,6 @@ function redirect($path)
 {
    header("Location:".ROOT."$path");
 }
-function checkLogin() 
-{
-   if(!getSession("login") ) {
-      redirect("cpanel/login");
-   }
-}
 function unique_img($name) 
 {
    $img = isset($_FILES[$name]) ? $_FILES[$name]['name'] :"";

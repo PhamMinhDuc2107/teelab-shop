@@ -2,33 +2,34 @@
 
 class Cpanel extends Controller
 {
-	private $CpanelModel;
+	private $AdminModel;
 	public function __construct() 
 	{
 		$this->AdminModel = $this->model("AdminModel");
+		
 	}
 	public function index()
 	{
-		if(getSession("login") || isset($_COOKIE['user'])) {
+		if(!getSession("login")  && !isset($_COOKIE['user'])) {
+			redirect("cpanel");
+		}else
+		{
 			$this->view("cpanel/layout", [
 				"title" => "Admin - Dashboard",
 				"page" => "dashboard/dashboard",
 				"heading" => "Dashboard",
 			]);
-		}else {
-			redirect("cpanel/login");
 		}
+		
 	}
 	public function login()
 	{
-		if(getSession("login") || isset($_COOKIE['user'])) {
+		if(getSession("login")) {
 			redirect("cpanel");
-		}else {
-			$this->view("cpanel/layoutAuth", [
-				"title" => "Login - Dashboard",
-			]);
 		}
-		
+		$this->view("cpanel/layoutAuth", [
+			"title" => "Login - Dashboard",
+		]);
 	}
 	public function login_post()
 	{
@@ -39,6 +40,7 @@ class Cpanel extends Controller
 			$user = $this->AdminModel->where(["username" => $username]);
 			if(isset($user[0])) 
 			{
+				show($user[0]);
 				if(password_verify($password,$user[0]->password)) 
 				{
 					if($remember == 1) {
@@ -55,21 +57,19 @@ class Cpanel extends Controller
 			{
 				redirect("cpanel/login?invalid");
 			}
-		}  
+		}
 	}
 	public function logout() 
 	{
-		if(getSession("login") || isset($_COOKIE['user'])) {
-			if($_COOKIE['user']) {
-				setcookie("user","", time() - 3600*24*30);
-			}
-			removeSession("login");
-			removeSession("user");
-			redirect("cpanel/login");
-		}else {
+		if(!getSession("login")) {
 			redirect("cpanel/login");
 		}
+		if($_COOKIE['user']) {
+			setcookie("user","", time() - 3600*24*30);
+		}
+		removeSession("login");
+		removeSession("user");
+		redirect("cpanel/login");
 	}
 }
-
 ?>

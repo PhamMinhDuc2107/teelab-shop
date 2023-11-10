@@ -142,6 +142,8 @@
    z-index: 10;
    @include hidden();
    position: absolute;
+   width: 5rem;
+   height: 5rem;
    top: 1rem;
    right: 1rem;
    border-radius: 50%;
@@ -150,6 +152,11 @@
    padding: 1rem;
    background-color: #d7d3d3cf;
    cursor: pointer;
+   & button {
+      border: none;
+      outline: none;
+      background-color: transparent;
+   }
    & img {
       display: inline-block;
       width: 2.5rem;
@@ -249,4 +256,8 @@
    .home__slider .swiper-wrapper {
       height: 33rem !important;
    }
+}
+.pagination__active {
+   background-color: black;
+   color: white;
 }

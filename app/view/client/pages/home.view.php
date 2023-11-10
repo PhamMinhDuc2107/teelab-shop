@@ -37,7 +37,7 @@
 
 				<h3 class="product__title">
 					<a href="
-					<?php echo isset($item['category']) ?  ROOT.$item['category']->slug  : ''?>"><?php echo isset($item['category']) ? $item['category']->title  : ""?></a>
+					<?php echo isset($item['category']) ?  ROOT."sanpham/".$item['category']->slug  : ''?>"><?php echo isset($item['category']) ? $item['category']->title  : ""?></a>
 				</h3>
 				<div class="product__list">
 					<?php if(isset($item['products'])) :?>
@@ -46,12 +46,15 @@
 								<div class="product__item--img">
 									<img src="<?php echo isset($product) ? ASSET."/uploads/product/".$product->img : "" ?>" alt="" />
 									<div class="product__item--sale">-<?php echo isset($product) ? $product->discount :"" ?>%</div>
-									<div class="overplay__hover">
-										<img
-										src="<?php echo ROOT ?>assets/client/images/shopping-cart-fast-moving-svgrepo-com.svg"
-										alt=""
-										/>
-									</div>
+									<form class="overplay__hover" method="post" action="<?php echo ROOT."giohang/add_cart" ?>">
+										<input type="text" hidden name="id" value="<?php echo $product->id  ?>">
+										<button type="submit" name="add_cart">
+											<img
+											src="<?php echo ROOT ?>assets/client/images/shopping-cart-fast-moving-svgrepo-com.svg"
+											alt=""
+											/>
+										</button>
+									</form>
 								</div>
 								<div class="product__img--detail">
 									<img
@@ -61,7 +64,7 @@
 								</div>
 								<div class="product__info">
 									<a
-									href=""
+									href="<?php echo ROOT."sanpham/chitiet/"."$product->id" ?>"
 									class="product__info--name"
 									><span
 									><?php echo isset($product) ? $product->name : "" ?></span
@@ -80,10 +83,10 @@
 						<?php endforeach ?>
 					<?php endif; ?>
 					<div class="product__item more">
-						<a href="<?php echo isset($item['category']) ? ROOT.$item['category']->slug : "" ?>" class="product__item--more"> Xem thêm </a>
+						<a href="<?php echo isset($item['category']) ? ROOT."sanpham/".$item['category']->slug : "" ?>" class="product__item--more"> Xem thêm </a>
 					</div>
 				</div>
-				<a href="<?php echo ROOT.$item['category']->slug ?>" class="product__more">Xem thêm</a>
+				<a href="<?php echo ROOT."sanpham/".$item['category']->slug ?>" class="product__more">Xem thêm</a>
 			</div>
 		<?php endforeach; ?>
 	</div>

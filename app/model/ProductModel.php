@@ -2,7 +2,7 @@
 
 class ProductModel extends Model
 {
-	protected $table = "product";
+	public $table = "product";
 	public $allowedColumns =["id", "name", "price", "discount", 'quantity',"img", "subtext", "category_id","remove"];
 	public function getDataProducts() {
 		$query = "SELECT product.id, product.name,product.price, product.discount, product.quantity, product.img, categories.title

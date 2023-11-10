@@ -1,6 +1,8 @@
 <?php 
 class Chinhsach extends Controller
 {
+	private $CategoriesModel;
+	
 	public function __construct()
 	{
 		$this->CategoriesModel = $this->model("CategoriesModel");
