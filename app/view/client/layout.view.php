@@ -42,6 +42,7 @@
 	</section>
 	<?php require_once './app/view/client/blocks/menu.view.php'; ?>
 </body>
+<!-- toastr -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 <!-- Jquery -->
 <script src="<?php echo ROOT ?>assets/client/js/app.js"></script>

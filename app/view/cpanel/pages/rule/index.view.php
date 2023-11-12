@@ -12,9 +12,9 @@ if(!empty($_GET['msg']))
   <thead class="table-primary text-white">
     <tr>
       <th class="col-1">Id</th>
-      <th class="col-3">Username</th>
-      <th class="col-2">Email</th>
-      <th class="col-3">Action</th>
+      <th class="col-6">Name</th>
+      <th class="col-3">Url</th>
+      <th class="col-2">Action</th>
     </tr>
   </thead>
   <tbody>
@@ -22,17 +22,14 @@ if(!empty($_GET['msg']))
       <?php foreach($data["data"] as $item) : ?>
         <tr>
           <th class="col-1"><?php echo $item->id ?></th>
-          <td class="col-5"><?php echo $item->username ?></td>
-          <td class="col-4"><?php echo $item->email ?></td>
+          <td class="col-6"><?php echo $item->name ?></td>
+          <td class="col-3"><?php echo $item->url ?></td>
           <td class="col-2">
             <div class="d-flex justify-content-center align-items-center">
-              <a href="<?php echo ROOT.'admin/add_rule_admin/'.$item->id ?>"  class="d-block text-primary btn-edit-category">
-                  <img src="https://pic.onlinewebfonts.com/thumbnails/icons_108143.svg" alt="" class="d-inline-block" style="width: 16px; height: 16px">
-              </a>
-              <a href="<?php echo ROOT.'admin/edit_admin/'.$item->id ?>"  class="d-block text-primary btn-edit-category">
+              <a href="<?php echo ROOT.'admin/edit_rule/'.$item->id ?>"  class="d-block text-primary btn-edit-category">
                 <i class="fa-regular fa-pen-to-square inline-block px-2"></i>
               </a>
-              <a href="<?php echo ROOT.'admin/delete_admin/'.$item->id ?>" class="d-block text-danger btn-delete-category" onClick="alert('Delete Category!')">
+              <a href="<?php echo ROOT.'admin/delete_rule/'.$item->id ?>" class="d-block text-danger btn-delete-category" onClick="alert('Delete Rule!')">
                 <i class="fa-solid fa-trash inline-block px-2"></i>
               </a>
             </div>

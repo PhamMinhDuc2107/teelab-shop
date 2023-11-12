@@ -23,4 +23,14 @@ Class Controller
       }
       return false;
    }
+   public function middleware(string $name)
+   {  
+      $filename = "./app/middleware/".$name.".php";
+      if(file_exists($filename)) 
+      {
+         require_once $filename;
+         return new $name();
+      }
+      return false;
+   }
 }

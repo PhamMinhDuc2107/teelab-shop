@@ -3,23 +3,20 @@
 class Cpanel extends Controller
 {
 	private $AdminModel;
+	private $AuthMiddleware;
 	public function __construct() 
 	{
 		$this->AdminModel = $this->model("AdminModel");
-		
+		$this->AuthMiddleware = $this->middleware("AdminMiddleware");		
 	}
 	public function index()
 	{
-		if(!getSession("login")  && !isset($_COOKIE['user'])) {
-			redirect("cpanel");
-		}else
-		{
+			$this->AuthMiddleware->handle();
 			$this->view("cpanel/layout", [
 				"title" => "Admin - Dashboard",
 				"page" => "dashboard/dashboard",
 				"heading" => "Dashboard",
 			]);
-		}
 		
 	}
 	public function login()
@@ -61,15 +58,21 @@ class Cpanel extends Controller
 	}
 	public function logout() 
 	{
-		if(!getSession("login")) {
-			redirect("cpanel/login");
-		}
+		$this->AuthMiddleware->handle();
 		if($_COOKIE['user']) {
 			setcookie("user","", time() - 3600*24*30);
 		}
 		removeSession("login");
 		removeSession("user");
 		redirect("cpanel/login");
+	}
+	public function forbidden()
+	{
+		$this->view("cpanel/layout", [
+			"title" => "Forbidden - Dashboard",
+			"page" => "Forbidden/index",
+			"heading" => "",
+		]);
 	}
 }
 ?>

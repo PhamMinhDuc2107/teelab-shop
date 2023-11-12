@@ -10,12 +10,16 @@
             <p class="search__box--text">Kiểm tra bằng</p>
             <div class="search__box--group">
                <div class="group__input">
-                  <input type="radio" id="phone" />
+                  <input type="radio" id="phone"  value="phone"  name="check_order"/>
                   <label for="phone">Số điện thoại</label>
                </div>
                <div class="group__input">
-                  <input type="radio" id="email" />
+                  <input type="radio" id="email" value="email" name="check_order"/>
                   <label for="email">Email</label>
+               </div>
+               <div class="group__input">
+                  <input type="radio" id="madonhang" value='madonhang' name="check_order"/>
+                  <label for="madonhang">Mã đơn hàng</label>
                </div>
             </div>
             <input

@@ -4,11 +4,13 @@ class Product extends Controller
 	private $ProductModel;
 	private $ProductImgModel;
 	private $CategoriesModel;
+	private $AuthMiddleware;
+	private $PermissionMiddleware;
 	public function __construct() 
 	{
-		if(!getSession("login")) {
-				redirect("cpanel/login");
-		}
+		$this->AuthMiddleware = $this->middleware("AdminMiddleware");
+		$this->AuthMiddleware->handle();
+		$this->PermissionMiddleware = $this->middleware("PermissionMiddleware");
 		$this->ProductModel = $this->model("ProductModel");
 		$this->ProductImgModel = $this->model("ProductImgModel");
 		$this->CategoriesModel = $this->model("CategoriesModel");
@@ -16,6 +18,8 @@ class Product extends Controller
 	}
 	public function index() 
 	{
+		$this->PermissionMiddleware->handle("product");
+
 		if(isset($_GET['page']) && $_GET['page'] !== "")
 		{
 			$this->ProductModel->offset = (esc($_GET['page']) - 1 ) * $this->ProductModel->limit;
@@ -49,6 +53,8 @@ class Product extends Controller
 	}
 	public function add_product() 
 	{
+		$this->PermissionMiddleware->handle("product/add_product");
+
 		$categories = $this->CategoriesModel->findAll();
 		$this->view("cpanel/layout", [
 			"title" => "Add Product - Dashboard",
@@ -92,6 +98,8 @@ class Product extends Controller
 	}
 	public function edit_product ($id) 
 	{
+		$this->PermissionMiddleware->handle("product/edit_product");
+
 		$product = $this->ProductModel->getDataProduct(["id" => $id]);
 		$categories = $this->CategoriesModel->findAll();
 		$this->view("cpanel/layout", [
@@ -166,6 +174,8 @@ class Product extends Controller
 	}
 	public function delete_product($id) 
 	{
+		$this->PermissionMiddleware->handle("product/delete_product");
+		
 		$product = $this->ProductModel->where(["id" => $id]);
 		if($product)
 		{

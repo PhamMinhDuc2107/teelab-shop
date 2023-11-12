@@ -17,6 +17,7 @@
 										alt=""
 										/>
 										<div class="product__item--sale">-<?php echo $item->discount?>%</div>
+										<?php if($item-> quantity > 0) :?>
 										<form class="overplay__hover" method="post" action="<?php echo ROOT."giohang/add_cart" ?>">
 											<input type="text" hidden name="id" value="<?php echo $item->id  ?>">
 											<button type="submit" name="add_cart">
@@ -26,6 +27,9 @@
 												/>
 											</button>
 										</form>
+									<?php else : ?>
+										<div class="sold"><span>SOLD OUT</span></div>
+									<?php endif;?>
 									</div>
 									<div class="product__img--detail">
 										<img

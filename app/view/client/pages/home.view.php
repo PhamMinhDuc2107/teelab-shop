@@ -29,7 +29,7 @@
 </section>
 <!-- hero -->
 <!-- product -->
-<section class="section__product mt-0">
+<section class="mt-0 section__product">
 	<div class="container">
 		<?php $data_total = isset($data['data']) ? $data['data'] : "";?>
 		<?php foreach($data_total as $item): ?>
@@ -46,15 +46,19 @@
 								<div class="product__item--img">
 									<img src="<?php echo isset($product) ? ASSET."/uploads/product/".$product->img : "" ?>" alt="" />
 									<div class="product__item--sale">-<?php echo isset($product) ? $product->discount :"" ?>%</div>
-									<form class="overplay__hover" method="post" action="<?php echo ROOT."giohang/add_cart" ?>">
-										<input type="text" hidden name="id" value="<?php echo $product->id  ?>">
-										<button type="submit" name="add_cart">
-											<img
-											src="<?php echo ROOT ?>assets/client/images/shopping-cart-fast-moving-svgrepo-com.svg"
-											alt=""
-											/>
-										</button>
-									</form>
+									<?php if($product-> 	quantity > 0) :?>
+										<form class="overplay__hover" method="post" action="<?php echo ROOT."giohang/add_cart" ?>">
+											<input type="text" hidden name="id" value="<?php echo $product->id  ?>">
+											<button type="submit" name="add_cart">
+												<img
+												src="<?php echo ROOT ?>assets/client/images/shopping-cart-fast-moving-svgrepo-com.svg"
+												alt=""
+												/>
+											</button>
+										</form>
+									<?php else : ?>
+										<div class="sold"><span>SOLD OUT</span></div>
+									<?php endif;?>
 								</div>
 								<div class="product__img--detail">
 									<img

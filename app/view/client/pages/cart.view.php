@@ -3,6 +3,24 @@
 	<div class="container">
 		<div class="cart__container">
 			<h3 class="cart__title">Giỏ hàng của bạn</h3>
+			<span class='order-success'><?php echo isset($_GET['valid'])? "Bạn đặt hàng thành công"."<a href='".ROOT."checkOrder'>kiểm tra đơn hàng</a>" : "" ?></span>
+			<style>
+				.order-success{
+					display: block;
+					text-align: center;
+					font-size: 16px;
+					color: #70e000;
+					margin-bottom: 20px;
+				}
+				.order-success a {
+					display: inline-block;
+					margin-left: 5px;
+					transition: all 0.3s linear;
+				}
+				.order-success a:hover {
+					color: red;
+				}
+			</style>
 			<div class="cart__wrapper">
 				<div class="cart__header">
 					<div>Thông tin sản phẩm</div>
@@ -13,8 +31,8 @@
 				<?php $carts = getSession("carts");
 				?>
 				<?php if(is_array($carts) && !empty($carts)):?>
+				<div class="cart__body">
 				<?php foreach($carts as $cart) :?>
-					<div class="cart__body">
 						<div class="cart__row">
 							<div class="cart__info">
 								<a
@@ -38,18 +56,19 @@
 						<div class="cart__price">
 							<span><?php echo number_format($price) ?>đ</span>
 						</div>
-						<div class="cart__quantity" data-id="<?php echo $cart['id']?>">
-							<input type="text" value="<?php echo $cart['quantity'] ?>">
+						<div class="cart__quantity">
+							<input type="text" value="<?php echo $cart['quantity'] ?>" name="<?php echo $cart['id'] ?>" class="cart__quantity--input">
 							<div class="cart__price">
 								<span><?php echo number_format($price) ?>đ</span>
 							</div>
 						
 						</div>
 						<div class="cart__total">
-							<span data-price=<?php echo $price?> data-id=<?php echo $cart['id']?>></span><?php echo number_format($price * $cart['quantity']) ?>đ</span>
+							<span data-price=<?php echo $price?> data-id=<?php echo $cart['id']?>><?php echo number_format($price * $cart['quantity']) ?>đ</span>
 						</div>
-					</div>
+					</div>	
 				<?php endforeach; ?>
+				</div>	
 			<?php else: ?>
 				<?php echo "<div style='padding: 20px 10px; display:flex;align-items:center;justify-content:space-between; flex-direction:column'>
 				<svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='1.5' stroke='currentColor' style='display:inline-block; width: 100px; height: 100px'>
@@ -62,15 +81,17 @@
 </div>
 </div>
 <?php if(is_array($carts) && !empty($carts)):?>
+			<div class="container">
 			<div class="cart__bottom">
 			<div class="cart__price--total">
 				<p>Tổng tiền :</p>
-				<span><?php echo number_format(cartTotalPrice()) ?>đ</span>
+				<span class="total-price"><?php echo number_format(cartTotalPrice()) ?>đ</span>
 			</div>
 			<a href="<?php echo ROOT."checkout"?>" class="cart__checkout">
 				<button type="button">Thanh toán</button>
 			</a>		
 		</div>
+			</div>
 	<?php endif; ?>
 </div>
 </div>
@@ -79,9 +100,10 @@
 	function formatCurrency(number) {
     return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(number).replace('.', ',');	
 	}	
-	$(".cart__quantity input").on("change", function() {
-    const quantity = $(this).val();
-	const id = $(".cart__quantity").data("id");
+	$(".cart__quantity--input").blur("input", function() {
+		let input = $(this);
+    	const quantity = input.val();
+		 let id = input.attr('name')
 		$.ajax({
 			url: 'http://localhost/shop-teelab/giohang/add_cart_with_ajax',
 			type: 'POST',
@@ -91,30 +113,23 @@
 				id:id,
 			},
 			success: function (result) {
-				const data= JSON.stringify(result);
-				console.log(`$ ~ data:`, data)
+				console.log(result)
 				if(result.mes){
 					toastr.warning(`${result.mes}`)
-					$(".cart__quantity input").val(result.quantity)
+					$(".cart__quantity--input").val(result.quantity)
 				}else {
-					const data = result.data;
+					const quantity = result.quantity;
 					const total = result.total;
-					const quantity = result.totalQuantity;
-					$(".cart__price--total span").text(formatCurrency(total))
-					$('.topbar__cart--number').text(quantity)
-					// $('.cart__total span').each(function() {
-					// 	let dataId = $(this).data('id');
-					// 	if(+id === +dataId)
-					// 	{
-					// 		let price = parseInt($(this).data('price'));
-					// 		let quantity = data;
-					// 		console.log(`$ ~ quantity:`, quantity)
-							
-					// 		let totalPrice = +price * +quantity;
-					// 		console.log(totalPrice);
-					// 		$(this).text(formatCurrency(totalPrice));
-					// 	}
-					// })
+					const totalQuantity = result.totalQuantity;
+					$(".total-price").text(formatCurrency(total))
+					$('.topbar__cart--number').text(totalQuantity)
+					$('.cart__total span').each(function() {
+						let price = parseInt($(this).data('price'));
+						let quantity = parseInt($(this).closest('.cart__row').find('.cart__quantity--input').val());
+						$(this).closest('.cart__row').find('.cart__quantity--input').val = quantity;
+						let totalPrice = price * quantity;
+						$(this).text(formatCurrency(totalPrice));
+					})
 				}
 			},
 			error:function () {

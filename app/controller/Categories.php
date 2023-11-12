@@ -3,15 +3,19 @@
 class Categories extends Controller
 {
 	protected $CategoriesModel;
+	private $AuthMiddleware;
+	private $PermissionMiddleware;
 	public function __construct() 
 	{
+		$this->AuthMiddleware = $this->middleware("AdminMiddleware");
+		$this->AuthMiddleware->handle();
+		$this->PermissionMiddleware = $this->middleware("PermissionMiddleware");
 		$this->CategoriesModel = $this->model("CategoriesModel");
-		if(!getSession("login")) {
-				redirect("cpanel/login");
-		}
+		
 	}
 	public function index() 
 	{
+		$this->PermissionMiddleware->handle("categories");
 		if(isset($_GET['page']) && $_GET['page'] !== "")
 		{
 			$this->CategoriesModel->offset = (esc($_GET['page']) - 1 ) * $this->CategoriesModel->limit;
@@ -45,6 +49,7 @@ class Categories extends Controller
 	}	
 	public function add_category() 
 	{
+		$this->PermissionMiddleware->handle("categories/add_category");
 		$categories = $this->CategoriesModel->getCategories();
 		$this->view("cpanel/layout", [
 			"title" => "Add Categories - Dashboard",
@@ -74,6 +79,8 @@ class Categories extends Controller
 	}
 	public function edit_category($id) 
 	{
+		$this->PermissionMiddleware->handle("categories/edit_category");
+
 		$category = $this->CategoriesModel->where(["id" => $id]);
 		$this->view("cpanel/layout", [
 			"title" => "Edit Categories - Dashboard",
@@ -103,6 +110,7 @@ class Categories extends Controller
 
 	public function delete_category ($id) 
 	{
+		$this->PermissionMiddleware->handle("categories/delete_category");
 		if($this->CategoriesModel->delete($id)) 
 		{
 			$messager['mes'] = "Xoá danh mục sản phẩm thành công!";

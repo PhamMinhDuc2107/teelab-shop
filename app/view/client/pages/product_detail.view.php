@@ -62,9 +62,9 @@ $detail_img = isset($data['detail_img']) ? $data['detail_img'] :"";
 					</div>
 					<a href="<?php echo ROOT.'bangsize' ?>">Hướng dẫn chọn size</a>
 				</div>
-				<div action="<?php echo $product[0]->quantity > 0 ? ROOT."giohang/add_cart" : ""?>" method="post">
-					<?php if($product[0]->quantity > 0) :?>
+				<div>
 						<form method="post" action="<?php echo ROOT."giohang/add_cart"?>" class="productDetail__quantity">
+						<?php if($product[0]->quantity > 0) :?>
 							<div class="productDetail__quantity--text">
 								Số lượng
 							</div>
@@ -75,13 +75,14 @@ $detail_img = isset($data['detail_img']) ? $data['detail_img'] :"";
 							</div>
 							<input type="text" hidden value="<?php echo $product[0]->id?>" name="id">
 							<span class="quantity__error"></span>
+							<?php endif; ?>
+
 							<div class="btn-buy">
 							<button type="<?php echo $product[0]->quantity > 0 ? "submit" : "button"?>" <?php echo $product[0]->quantity > 0 ? "" : "disabled"?>>
 								<?php echo $product[0]->quantity > 0 ? "THÊM VÀO GIỎ" : "HẾT HÀNG"?></button>
 							</div>
 					</div>
 						</form>
-					<?php endif; ?>
 					
 				</div>
 			</div>

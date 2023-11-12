@@ -48,7 +48,9 @@ class Model
       return $this->query($query, []);
    }
    public function insert_get_id($data) {
-      $query = $this->insret_shared($data);
+      $query = $this->insert_shared($data);
+      show($query);
+      show($data);
       $id = $this->query_id($query, $data);
       return $id;
    }
@@ -104,7 +106,7 @@ class Model
    {
 
       /** remove unwanted data **/
-      $query = $this->insret_shared($data);
+      $query = $this->insert_shared($data);
       if(empty($this->query($query, $data))){
          return true;
       }
@@ -152,7 +154,7 @@ class Model
       }
       return false;
    }
-   public function insret_shared($data) 
+   public function insert_shared($data) 
    {
       if(!empty($this->allowedColumns))
       {

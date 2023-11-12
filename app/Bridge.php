@@ -6,3 +6,4 @@ require_once './app/core/functions.php';
 require_once './app/core/Session.php';
 require_once './app/core/Controller.php';
 require_once './app/core/Model.php';
+require_once "./app/core/Middleware.php";

@@ -2,15 +2,19 @@
    class Coupon extends Controller
    {
       private $CouponModel;
+      private $AuthMiddleware;
+      private $PermissionMiddleware;
       public function __construct()
       {
+         $this->AuthMiddleware = $this->middleware("AdminMiddleware");
+		   $this->AuthMiddleware->handle();
+         $this->PermissionMiddleware = $this->middleware("PermissionMiddleware");
          $this->CouponModel = $this->model("CouponModel");
-         if(!getSession("login")) {
-				redirect("cpanel/login");
-		}
+         
       }
       public function index()
       {
+		   $this->PermissionMiddleware->handle("coupon");
          $coupons = $this->CouponModel->findAll();
          $this->view("cpanel/layout", [
             "title" => "Coupons - Categories",
@@ -21,6 +25,8 @@
       }
       public function add_coupon()
       {
+		   $this->PermissionMiddleware->handle("coupon/add_coupon");
+
          $this->view("cpanel/layout", [
             "title" => "Add Coupons - Coupons",
             "page"=>"coupon/form_coupon",
@@ -55,6 +61,8 @@
       }
       public function edit_coupon($id)
       {
+		   $this->PermissionMiddleware->handle("coupon/edit_coupon");
+
          $coupon = $this->CouponModel->where(['id' =>$id]);
          $this->view("cpanel/layout", [
             "title" => "Edit Coupons - Coupons",
@@ -90,6 +98,7 @@
       }
       public function delete_coupon($id)
       {
+		   $this->PermissionMiddleware->handle("coupon/delete_coupon");
             if($this->CouponModel->delete($id))
             {
                $messager['mes'] = "Xoá mã giảm giá thành công!";

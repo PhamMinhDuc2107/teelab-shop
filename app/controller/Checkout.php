@@ -5,12 +5,14 @@
       private $OrderModel;
       private $OrderDetailModel;
       private $ShippingModel;
+      private $ProductModel;
       public function __construct()
       {
          $this->CouponModel = $this->model("CouponModel");
-         $this->OrderDetail = $this->model("OrderDetail");
+         $this->OrderModel = $this->model("OrderModel");
          $this->OrderDetailModel = $this->model("OrderDetailModel");
          $this->ShippingModel = $this->model("ShippingModel");
+         $this->ProductModel = $this->model("ProductModel");
       }
       public function index() 
       {
@@ -45,25 +47,67 @@
             $address = isset($_POST["address"]) ? esc($_POST["address"]) :"";
             $note = isset($_POST["note"]) ? esc($_POST["note"]) :"";
             $coupon = isset($_POST["coupon"]) ? esc($_POST["coupon"]) :"";
-            $data = ["email" => $email,"name" =>  $name,"phone" =>  $phone, "address" => $address,"note"=> $note];
-            $paymentMethod = isset($_POST["paymentMethod"]) ? $_POST["paymentMethod"] :"";
-            switch ($paymentMethod)
+            $data = ["email" => $email,"name" =>  $name,"phone" =>  $phone, "address" => $address,"note"=> $note, "method" => 0,"madonhang" => $madonhang];
+            if($email === "" || $name === '' || $phone === "" || $address ="" || $note === "") 
+            {
+               redirect("checkout?invalid");
+            }
+            $total_quantity = cartTotal();
+            $total_price = cartTotalPrice();
+            $now  =date('Y-m-d H:i:s');
+            $carts = getSession("carts");
+            $payment_method = isset($_POST["paymentMethod"]) ? $_POST["paymentMethod"] :"";
+            switch ($payment_method)
             {
                case "cash":
                   $shipping_id = $this->ShippingModel->insert_get_id($data);
-                 if(isset($coupon))
+                  
+                 if($coupon !== "")
                  {
-                  $dataCoupon = $this->CouponModel->where(['code' => $coupon]);
-                  if(isset($data))
+                  $data_coupon = $this->CouponModel->where(['code' => $coupon]);
+                  if(isset($data_coupon))
                   {
-                    $quantity = $dataCoupon->quantity - 1;
-                    $this->CouponModel->update(['quantity' => $quantity]);
+                    $quantity = $data_coupon[0]->quantity - 1;
+                    $this->CouponModel->update($data_coupon[0]->id,['quantity' => $quantity]);
+                    $data_orders = [
+                     "shipping_id"=> +$shipping_id,
+                     "coupon_id" => +$data_coupon[0]->id,
+                     "quantity" =>  +$total_quantity,
+                     "total" => +$total_price,
+                     "date" => $now,
+                     "order_status" => 0
+                    ];
                   }
+                 }else 
+                 {
+                  $data_orders = [
+                     "shipping_id"=> +$shipping_id,
+                     "coupon_id" => null,
+                     "quantity" =>  +$total_quantity,
+                     "total" => +$total_price,
+                     "date" => $now,
+                     "order_status" => 0
+                    ];
                  }
-                 $dataOrders = [
-                  ""
-                 ]
-                 $order_id  =$this->OrderModel->insert_get_id($dataOrders);
+                 
+                 $order_id  =$this->OrderModel->insert_get_id($data_orders);
+                 foreach($carts as $cart)
+                 {
+                  $data_cart = [
+                     "order_id" => $order_id ,
+                     "product_id" => $cart['id'],
+                     "quantity" => $cart["quantity"],
+                     "price"=> $cart["price"],
+                  ];
+                  $this->OrderDetailModel->insert($data_cart);
+                  $product = $this->ProductModel->where(['id' => $cart['id']])[0];
+                  $data_product  = [
+                     "quantity" => $product->quantity - $cart['quantity'],
+                  ];
+                  $this->ProductModel->update($cart['id'], $data_product);
+                 }
+                 removeSession("carts");
+                 redirect("giohang?valid");
                   break;
                case "momo" : 
                   echo"momo";

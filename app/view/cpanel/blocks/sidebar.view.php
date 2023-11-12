@@ -2,7 +2,7 @@
 <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
 	<!-- Sidebar - Brand -->
-	<a class="sidebar-brand d-flex align-items-center justify-content-center" href="<?php echo ROOT ?>admin">
+	<a class="sidebar-brand d-flex align-items-center justify-content-center" href="<?php echo ROOT ?>cpanel">
 		<div class="sidebar-brand-icon rotate-n-15">
 			<i class="fas fa-laugh-wink"></i>
 		</div>
@@ -13,14 +13,25 @@
 	<hr class="my-0 sidebar-divider">
 	<!-- Nav Item - Dashboard -->
 	<li class="nav-item active">
-		<a class="nav-link" href="<?php echo ROOT ?>admin">
+		<a class="nav-link" href="<?php echo ROOT ?>cpanel">
 			<i class="fas fa-fw fa-tachometer-alt"></i>
 			<span>Dashboard</span></a>
 		</li>
 
 		<!-- Divider -->
 		<hr class="sidebar-divider">
-		
+		<li class="nav-item">
+			<a class="nav-link collapsed" href="" data-toggle="collapse" data-target="#managerOrder"
+			aria-expanded="true" aria-controls="managerOrder">
+			<i class="fa-solid fa-list-check"></i>
+			<span>Quản lý đơn hàng</span>
+		</a>
+		<div id="managerOrder" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+			<div class="py-2 bg-white rounded collapse-inner">
+				<a class="collapse-item" href="<?php echo ROOT ?>order">Liệt kê đơn hàng</a>
+			</div>
+		</div>
+	</li>
 		<!-- Nav Item - Pages Collapse Menu -->
 		<li class="nav-item">
 			<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
@@ -62,6 +73,8 @@ data-parent="#accordionSidebar">
 <div class="py-2 bg-white rounded collapse-inner">
 	<a class="collapse-item" href="<?php echo ROOT ?>admin">Liệt kê admin</a>
 	<a class="collapse-item" href="<?php echo ROOT ?>admin/add_admin">Thêm admin</a>
+	<a class="collapse-item" href="<?php echo ROOT ?>admin/rule">Liệt kê Rule</a>
+	<a class="collapse-item" href="<?php echo ROOT ?>admin/add_rule">Thêm Rule</a>
 </div>
 </div>
 </li>

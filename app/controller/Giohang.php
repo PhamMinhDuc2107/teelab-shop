@@ -49,9 +49,9 @@ class Giohang extends Controller
 			$carts[$id]['quantity'] = $quantity;
 			setSession("carts", $carts);
 		}
-		$data['data'] = $carts;
 		$data['total'] = cartTotalPrice();
 		$data['totalQuantity'] = cartTotal();
+		$data['quantity'] = $quantity;
 		echo json_encode($data);
 	}
 	public function check_quantity_cart() 
@@ -71,9 +71,7 @@ class Giohang extends Controller
 		}else 
 		{
 			$data['quantity'] = $quantity;
-
 		}
-		header('Content-Type: application/json');
 		echo json_encode($data);
 	}
 	

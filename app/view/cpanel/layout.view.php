@@ -69,22 +69,31 @@
 <script src="<?php echo ROOT ?>assets/admin/js/demo/chart-pie-demo.js"></script>
 <script>
     const sort = document.querySelector(".sortBar-select");
+   if(sort)
+   {
     sort.addEventListener("change", handlerOnchange);
     function handlerOnchange(e) {
         const order = e.target.value;
         updateURL(order);
     }
+   }
     const sortCol = document.querySelector(".sortBar-col");
-    sortCol.addEventListener("change", handlerOnchangeCol);
-    function handlerOnchangeCol(e) {
-        const col = e.target.value;
-        updateURL(undefined, col, undefined);
+    if(sortCol)
+    {
+        sortCol.addEventListener("change", handlerOnchangeCol);
+        function handlerOnchangeCol(e) {
+            const col = e.target.value;
+            updateURL(undefined, col, undefined);
+        }
     }
     const page = document.querySelector(".pagination")
-    page.addEventListener("click", function(e) {
+    if(page)
+    {
+        page.addEventListener("click", function(e) {
         let page = +e.target.dataset.id;
         updateURL(undefined,undefined,page);
-    })
+        })
+    }
     function updateURL(order, col, page) {
         const url = new URL(window.location.href);
 

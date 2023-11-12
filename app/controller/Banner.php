@@ -2,16 +2,20 @@
 class Banner extends Controller 
 {
 	private $BannerModel;
+	private $AuthMiddleware;
+	private $PermissionMiddleware;
+
 	public function __construct() 
 	{
+		$this->AuthMiddleware = $this->middleware("AdminMiddleware");
+		$this->AuthMiddleware->handle();
+		$this->PermissionMiddleware = $this->middleware("PermissionMiddleware");
 		$this->BannerModel = $this->model("BannerModel");
-		if(!getSession("login")) {
-				redirect("cpanel/login");
-		}
+		
 	}
 	public function index()
 	{
-		
+		$this->PermissionMiddleware->handle("banner");
 		if(isset($_GET['page']) && $_GET['page'] !== "")
 		{
 			$this->BannerModel->offset = (esc($_GET['page']) - 1 ) * $this->BannerModel->limit;
@@ -47,6 +51,8 @@ class Banner extends Controller
 	}
 	public function add_banner() 
 	{
+		$this->PermissionMiddleware->handle("banner/add_banner");
+
 		if(!getSession("login")) {
 			redirect("cpanel/login");
 		}
@@ -80,6 +86,8 @@ class Banner extends Controller
 	}
 	public function edit_banner($id) 
 	{
+		$this->PermissionMiddleware->handle("banner/edit_banner");
+
 		$banner = $this->BannerModel->where(["id" => $id]);
 		$this->view("cpanel/layout", [
 			"title" => "Edit Banner - Dashboard",
@@ -131,6 +139,8 @@ class Banner extends Controller
 	}
 	public function delete_banner ($id) 
 	{
+		$this->PermissionMiddleware->handle("banner/delete_banner");
+
 		$record= $this->BannerModel->where(["id"=> $id]);
 		if($record[0])
 		{

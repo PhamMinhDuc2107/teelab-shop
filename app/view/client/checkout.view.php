@@ -21,11 +21,11 @@
 	href="https://unpkg.com/swiper/swiper-bundle.min.css"
 	/>
 	<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
-	<!-- css -->
-	<link rel="stylesheet" href="<?php echo ROOT  ?>assets/client/css/app.css" />
+   <!-- toastr -->
+   <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet">	
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-   
+   <!-- css -->
+	<link rel="stylesheet" href="<?php echo ROOT  ?>assets/client/css/app.css" />
 </head>
 <body>
 <?php $carts = getSession("carts")?>
@@ -34,11 +34,22 @@
       <h3 class="main-logo-header main-logo">
          <img src="<?php echo ASSET?>client/images/logo.webp" alt="">
       </h3>
-   <form  class="form-order" method="post"  action="<?php echo ROOT."checkout/checkout_post"?>">
+   <form  class="form-order" method="post" action="<?php echo ROOT."checkout/checkout_post"?>">
       <div class="main">
          <a href="<?php echo ROOT?>" class="main-logo">
             <img src="<?php echo ASSET?>client/images/logo.webp" alt="">
          </a>
+         <span class="order-mes"><?php echo isset($_GET['invalid']) ? "Vui lòng điền đầy đủ thông tin" : "" ?></span>
+         <style>
+            .order-mes {
+               color: red;
+               font-size: 14px;
+               line-height: 1.6;
+               display: block;
+               margin: 10px 0;
+               text-align: center;
+            }
+         </style>
          <div style=""  class="main-container">
          <div class="main-left">
             <div action="" class="main-form">
@@ -165,6 +176,7 @@
 </div>
 </body>
 </html>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 <script>
    function formatCurrency(number) {
     return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(number).replace('.', ',');	
@@ -179,6 +191,7 @@
             data: {code: coupon},
             success: function(result) {
                const data = JSON.parse(result);
+               console.log(data);
              if(Object.keys(data).length !== 0){
                const discountAmount = data.discount_amount;
                const total = data.total;
@@ -194,7 +207,7 @@
                {
                   $(".coupon-success").text(`Áp dụng ${data.code} thành công`)
                   $(".aside_price-coupon").text(formatCurrency(discountAmount));
-                  $(".price-total").text(formatCurrency(total - discountAmount - feeship))
+                  $(".price-total").text(formatCurrency(total - discountAmount))
                }
              }else {
                $(".coupon-errors").text(`Áp dụng mã coupon thất bại`)
@@ -205,9 +218,4 @@
             }
           })
         })
-        function ajaxFeeShip() {
-          $(".price-feeship").val("30,000đ")
-          
-        }
-        $(".price-feeship").on("click",ajaxFeeShip)
 </script>
