@@ -8,6 +8,7 @@
       padding: 1.5rem;
       border-radius: 0.5rem;
       background-color: #fff;
+      gap: 1.5rem;
       padding-top: 3rem;
       padding-bottom: 2.5rem;
    }
@@ -56,13 +57,35 @@
          padding: 0 1rem;
       }
    }
+   &__tab {
+      width: 70%;
+   }
+   & .info {
+      &-title {
+         font-size: 1.6rem;
+         line-height: 1.7;
+         font-weight: bold;
+         text-align: center;
+         margin-bottom: 1rem;
+      }
+
+      &-table-item {
+         padding: 1rem 0;
+         text-align: center;
+         font-size: 14px;
+      }
+   }
 }
+
 @media screen and (max-width: $breakpoint-lg) {
    .checkOrder {
       &__container {
          flex-wrap: wrap;
       }
       & .search__box {
+         width: 100%;
+      }
+      &__tab {
          width: 100%;
       }
    }

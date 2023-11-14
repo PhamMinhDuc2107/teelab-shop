@@ -29,6 +29,8 @@
 		<div id="managerOrder" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
 			<div class="py-2 bg-white rounded collapse-inner">
 				<a class="collapse-item" href="<?php echo ROOT ?>order">Liệt kê đơn hàng</a>
+				<a class="collapse-item" href="<?php echo ROOT ?>order/export_excel">Xuất file excel</a>
+
 			</div>
 		</div>
 	</li>

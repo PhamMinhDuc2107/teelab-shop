@@ -7,6 +7,7 @@
       private $OrderDetailModel;
       private $AuthMiddleware;
       private $PermissionMiddleware;
+      private $Excel ;
       public function __construct()
       {
          $this->AuthMiddleware = $this->middleware("AdminMiddleware");
@@ -16,6 +17,7 @@
          $this->OrderModel = $this->model("OrderModel");
          $this->ShippingModel = $this->model("ShippingModel");
          $this->OrderDetailModel = $this->model("OrderDetailModel");
+         $this->Excel = new Excel();
       }
       public function index()
       {
@@ -41,6 +43,7 @@
 		   	$products = $this->OrderModel->getDataOrder();
          }
          $data = $this->OrderModel->getDataOrder();
+         
          $this->view("cpanel/layout", [
             "title" => "Manager Order - Orders",
             "page"=>"order/index",
@@ -78,6 +81,26 @@
             $this->OrderModel->update($id, ['order_status'=> 1]);
          }
          redirect('order/order_detail/'.$id);
+      }
+      public function export_excel()
+      {  
+         $data_orders = $this->OrderModel->getDataOrder();
+         $data = [];
+         if(!empty($data_orders) && count($data_orders) > 0)
+         {
+            $keys = array_keys((array)$data_orders[0]);
+            array_push($data, $keys);
+            foreach($data_orders as $item)
+            {
+               $data_item = [];
+               foreach($item as $key => $value)
+               {
+                  $data_item[$key]  = $value;
+               }
+               array_push($data, array_values($data_item));            
+            };
+         }
+         $this->Excel->export($data);
       }
    }
 ?>

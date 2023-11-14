@@ -7,3 +7,5 @@ require_once './app/core/Session.php';
 require_once './app/core/Controller.php';
 require_once './app/core/Model.php';
 require_once "./app/core/Middleware.php";
+require_once "./vendor/autoload.php";
+require_once "./app/core/Excel.php";

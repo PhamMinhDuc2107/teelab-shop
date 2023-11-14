@@ -77,15 +77,6 @@
         updateURL(order);
     }
    }
-    const sortCol = document.querySelector(".sortBar-col");
-    if(sortCol)
-    {
-        sortCol.addEventListener("change", handlerOnchangeCol);
-        function handlerOnchangeCol(e) {
-            const col = e.target.value;
-            updateURL(undefined, col, undefined);
-        }
-    }
     const page = document.querySelector(".pagination")
     if(page)
     {
@@ -99,9 +90,6 @@
 
         if (order !== undefined) {
             url.searchParams.set('order', order);
-        }
-        if (col !== undefined) {
-            url.searchParams.set('col', col);
         }
         if(page !== undefined) {
             url.searchParams.set('page', page);

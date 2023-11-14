@@ -11,6 +11,11 @@ if(!empty($_GET['msg']))
 ?>
 <div class="mb-3"><a href="<?php echo ROOT.'admin'?>" class="btn btn-primary d-inline-block">Quay lại</a></div>
 
+<?php 
+   $rules = isset($data['rules']) ? $data['rules'] : "";
+   $permissions = isset($data['permissions']) ? $data['permissions'] : "";
+?>
+<form action="<?php echo ROOT.$data['action']?>" method="post">
 <table class="table table-bordered">
   <thead class="table-primary text-white">
     <tr>
@@ -20,33 +25,29 @@ if(!empty($_GET['msg']))
       <th class="col-2">Action</th>
     </tr>
   </thead>
-  <tbody>
-      <?php $rules = isset($data['rules']) ? $data['rules'] : ""?>
-      <?php 
-      $permissions = isset($data['permissions']) ? $data['permissions'] : "";
-      ?>
-  
-    <?php if($rules) :?>
-      <?php foreach($rules as $item) : ?>
-        <tr>
-          <th class="col-1"><?php echo $item->id ?></th>
-          <td class="col-6"><?php echo $item->name ?></td>
-          <td class="col-3"><?php echo $item->url ?></td>
-          <td class="col-2">
-            <div class="d-flex justify-content-center align-items-center">
-              <input type="checkbox" name="permissions[]" value="<?php echo $item->id?>" 
-              <?php 
-              foreach($permissions as $permission)
-              {
-               echo +$permission->rule_id === +$item->id ? "checked" : "";
-              }
-              
-              ?>
-              >
-            </div>
-          </td>
-        </tr>
-      <?php endforeach;  ?>
-    <?php endif; ?>
+  <tbody>  
+      <?php if($rules) :?>
+         <?php foreach($rules as $item) : ?>
+         <tr>
+            <th class="col-1"><?php echo $item->id ?></th>
+            <td class="col-6"><?php echo $item->name ?></td>
+            <td class="col-3"><?php echo $item->url ?></td>
+            <td class="col-2">
+               <div class="d-flex justify-content-center align-items-center">
+               <input type="checkbox" name="permissions[]" value="<?php echo $item->id?>" 
+               <?php 
+               foreach($permissions as $permission)
+               {
+                  echo +$permission->rule_id === +$item->id ? "checked" : "";
+               }
+               ?>
+               >
+               </div>
+            </td>
+         </tr>
+         <?php endforeach;  ?>
+      <?php endif; ?>
   </tbody>
 </table>
+<button type="submit" class="btn btn-primary mb-5">Add Rule Admin</button>
+</form>

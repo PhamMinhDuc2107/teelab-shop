@@ -1,4 +1,6 @@
 <?php
+   use PHPMailer\PHPMailer\PHPMailer;
+   use PHPMailer\PHPMailer\Exception;
    class Checkout extends Controller
    {
       private $CouponModel;
@@ -56,12 +58,14 @@
             $total_price = cartTotalPrice();
             $now  =date('Y-m-d H:i:s');
             $carts = getSession("carts");
+            $data_mail = [];
+            $data_mail['carts'] = $carts;
+            $data_mail['data_info'] = $data;
             $payment_method = isset($_POST["paymentMethod"]) ? $_POST["paymentMethod"] :"";
             switch ($payment_method)
             {
                case "cash":
                   $shipping_id = $this->ShippingModel->insert_get_id($data);
-                  
                  if($coupon !== "")
                  {
                   $data_coupon = $this->CouponModel->where(['code' => $coupon]);
@@ -69,11 +73,13 @@
                   {
                     $quantity = $data_coupon[0]->quantity - 1;
                     $this->CouponModel->update($data_coupon[0]->id,['quantity' => $quantity]);
+                    $data_mail['coupon'] = $data_coupon[0]->discount_amount;
+                    $data_mail['total_price_coupon'] = +$total_price - $data_coupon[0]->discount_amount;
                     $data_orders = [
                      "shipping_id"=> +$shipping_id,
                      "coupon_id" => +$data_coupon[0]->id,
                      "quantity" =>  +$total_quantity,
-                     "total" => +$total_price,
+                     "total" => +$total_price - $data_coupon[0]->discount_amount,
                      "date" => $now,
                      "order_status" => 0
                     ];
@@ -106,6 +112,7 @@
                   ];
                   $this->ProductModel->update($cart['id'], $data_product);
                  }
+                 $this->sendEmail("Order Information ", $data_mail, $email);
                  removeSession("carts");
                  redirect("giohang?valid");
                   break;
@@ -119,5 +126,34 @@
             }
          }
       }
+      public function sendEmail($title, $data, $email) {
+         $mail = new PHPMailer(true);
+         try {
+            $mail->SMTPDebug = 0;
+            $mail->isSMTP();
+            $mail->Host = EMAIL_HOST;
+            $mail->SMTPAuth = true;
+            $mail->Username = EMAIL;
+            $mail->Password = EMAIL_SECRET;
+            $mail->SMTPSecure = EMAIL_SMTP_SECURE;
+            $mail->Port = EMAIL_PORT;
+ 
+             $mail->setFrom(EMAIL, 'Oder Information PMD - SHOP');
+             $mail->addAddress($email, 'Recipient Name');
+            
+             $mail->isHTML(true);
+             $mail->Subject = $title;
+             ob_start();
+            $this->view("client/send_mail",['data' => $data]);
+            $emailBody = ob_get_clean();
+             $mail->Body    =  $emailBody;
+             $mail->AltBody    = 'Body of the Email';
+             $mail->send();
+             echo 'Email has been sent successfully!';
+         } catch (Exception $e) {
+             echo 'Message could not be sent. Mailer Error: ', $mail->ErrorInfo;
+         }
+     }
+ 
    }
 ?>

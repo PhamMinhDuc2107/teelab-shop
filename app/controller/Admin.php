@@ -237,7 +237,32 @@ class Admin extends Controller
 			"heading" => "Add Rule Admin",
 			"rules"=>$rules,
 			"permissions" => $permissions,
+			"action" => "admin/add_rule_admin_post/".$id
 		]);
+	}
+	public function add_rule_admin_post($admin_id)
+	{
+		if($_POST)
+		{
+			$permissions = isset($_POST['permissions']) ? $_POST['permissions'] : "";
+			if(!empty($permissions))
+			{	
+				$is_valid  = true;
+				foreach($permissions as $rule_id)
+				{
+					if(!$this->PermissionModel->insert(["admin_id" => $admin_id, "rule_id" => $rule_id]))
+					{
+						$is_valid = false;
+						break;
+					}
+				}
+				if($is_valid)
+				{
+					$messager['mes'] = "Thêm  quyền thành công!";
+					redirect('admin/rule?msg='.urldecode(serialize($messager)));
+				}
+			}
+		}
 	}
 }
 

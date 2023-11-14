@@ -5,14 +5,6 @@
 			<option <?php echo isset($_GET['order']) && $_GET['order'] === "asc" ? "selected" :"" ?> value="asc">Sắp xếp tăng dần</option>
 			<option <?php echo isset($_GET['order']) && $_GET['order'] === "desc" ? "selected" :"" ?>  value="desc">Sắp xếp giảm dần</option>
 		</select>
-		<select class="sortBar-col ml-3">
-			<option value="">Column</option>
-			<?php if($data['col']): ?>
-				<?php foreach($data['col'] as $item) :?>
-					<option <?php echo isset($_GET['col']) && $_GET['col'] === $item ? "selected" :"" ?>  value='<?php  echo $item ?>'><?php echo $item ?></option>
-				<?php endforeach; ?>
-			<?php endif; ?>
-		</select>
 	</div>
 	<form action="" class="col-6 ml-auto search d-flex justify-content-end items-center">
 		<input type="text" name="q" class="w-50" placeholder="Seach for...">
