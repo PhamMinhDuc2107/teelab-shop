@@ -100,7 +100,7 @@
                array_push($data, array_values($data_item));            
             };
          }
-         $this->Excel->export($data);
+         $this->Excel->export();
       }
    }
 ?>
