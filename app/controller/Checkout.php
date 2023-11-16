@@ -1,6 +1,6 @@
 <?php
-   use PHPMailer\PHPMailer\PHPMailer;
-   use PHPMailer\PHPMailer\Exception;
+  use PHPMailer\PHPMailer\PHPMailer;
+  use PHPMailer\PHPMailer\Exception;
    class Checkout extends Controller
    {
       private $CouponModel;
@@ -8,6 +8,7 @@
       private $OrderDetailModel;
       private $ShippingModel;
       private $ProductModel;
+      private $Email;
       public function __construct()
       {
          $this->CouponModel = $this->model("CouponModel");
@@ -15,6 +16,7 @@
          $this->OrderDetailModel = $this->model("OrderDetailModel");
          $this->ShippingModel = $this->model("ShippingModel");
          $this->ProductModel = $this->model("ProductModel");
+         $this->Email= new Email();
       }
       public function index() 
       {
@@ -95,7 +97,6 @@
                      "order_status" => 0
                     ];
                  }
-                 
                  $order_id  =$this->OrderModel->insert_get_id($data_orders);
                  foreach($carts as $cart)
                  {
@@ -112,7 +113,7 @@
                   ];
                   $this->ProductModel->update($cart['id'], $data_product);
                  }
-                 $this->sendEmail("Order Information ", $data_mail, $email);
+                 $this->Email->send_mail("Order Information ", $data_mail, $email);
                  removeSession("carts");
                  redirect("giohang?valid");
                   break;
@@ -126,34 +127,5 @@
             }
          }
       }
-      public function sendEmail($title, $data, $email) {
-         $mail = new PHPMailer(true);
-         try {
-            $mail->SMTPDebug = 0;
-            $mail->isSMTP();
-            $mail->Host = EMAIL_HOST;
-            $mail->SMTPAuth = true;
-            $mail->Username = EMAIL;
-            $mail->Password = EMAIL_SECRET;
-            $mail->SMTPSecure = EMAIL_SMTP_SECURE;
-            $mail->Port = EMAIL_PORT;
- 
-             $mail->setFrom(EMAIL, 'Oder Information PMD - SHOP');
-             $mail->addAddress($email, 'Recipient Name');
-            
-             $mail->isHTML(true);
-             $mail->Subject = $title;
-             ob_start();
-            $this->view("client/send_mail",['data' => $data]);
-            $emailBody = ob_get_clean();
-             $mail->Body    =  $emailBody;
-             $mail->AltBody    = 'Body of the Email';
-             $mail->send();
-             echo 'Email has been sent successfully!';
-         } catch (Exception $e) {
-             echo 'Message could not be sent. Mailer Error: ', $mail->ErrorInfo;
-         }
-     }
- 
    }
 ?>

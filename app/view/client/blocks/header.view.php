@@ -22,10 +22,10 @@
             <div class="topbar__search--icon">
                <i class="fa fa-search"></i>
             </div>
-            <a href="<?php echo ROOT."giohang" ?>" class="topbar__cart">
-               <div class="topbar__cart--icon">
+            <div  class="topbar__cart">
+               <a href="<?php echo ROOT."giohang" ?>"  class="topbar__cart--icon">
                   <img src="<?php echo ROOT ?>assets/client/images/shopping.webp" alt="" />
-               </div>
+               </a>
                <div class="topbar__cart--number">
                   <span><?php echo cartTotal() ?></span>
                </div>
@@ -60,6 +60,7 @@
                                  </div>
                                  <div class="grid__item">
                                     <span class="grid__item--price"
+                                    data-price=<?php echo $cart['price'] - ($cart['price'] * $cart['discount'] / 100) ?>
                                     ><?php echo number_format($cart['price'] - ($cart['price'] * $cart['discount'] / 100)) ?>đ</span
                                     >
                                     <a href="<?php echo ROOT."giohang/remove_cart/".$cart["id"]?>" class="grid__item--remove">
@@ -78,8 +79,8 @@
                         <p style='font-size:14px; text-align:center; margin: 20px 0'>Không có sản phẩm nào trong giỏ hàng của bạn</p> 
                      </div>"?>
                      <?php endif; ?>
-               </div>
-               <div class="cart__mini--bot">
+                  </div>
+                  <div class="cart__mini--bot">
                   <div class="cart__mini--total">
                      <span class="text">Tổng tiền:</span>
                      <span class="number total-price"><?php echo number_format(cartTotalPrice()) ?>đ</span>
@@ -88,9 +89,10 @@
                      <button>Thanh toán</button>
                   </a>
                </div>
+               </div>
             </div>
             <!-- /cart--mini -->
-         </a>
+         </div>
       </div>
       <form method="get" action="<?php echo ROOT.'search'?>" class="form-search">
          <input type="text" name="search" placeholder="Tìm kiếm sản phẩm..." />

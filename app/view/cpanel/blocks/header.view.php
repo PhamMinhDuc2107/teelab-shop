@@ -159,12 +159,10 @@
 <li class="nav-item dropdown no-arrow">
     <a class="nav-link dropdown-toggle" href="<?php echo ROOT ?>assets/admin/#" id="userDropdown" role="button"
         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        <span class="mr-2 text-gray-600 d-none d-lg-inline small">
-            
-            <?php echo isset($_SESSION['user']) ? ucfirst($_SESSION['user']->username) : "user" ?></span>
-            
+        <span class="mr-2 text-gray-600 d-none d-lg-inline small"> 
+            <?php echo isset($_SESSION['user']) ? ucfirst($_SESSION['user']->username) : "user" ?></span> 
             <img class="img-profile rounded-circle"
-            src="img/undraw_profile.svg">
+            src="<?php echo ASSET."admin/img/user-1.jpg"?>">
         </a>
         <!-- Dropdown - User Information -->
         <div class="shadow dropdown-menu dropdown-menu-right animated--grow-in"

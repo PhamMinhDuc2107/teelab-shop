@@ -11,8 +11,8 @@ class Hethongcuahang extends Controller
 		$categories = $this->CategoriesModel->findAll();
 		$categories_actives = $this->CategoriesModel->where(["status" => 1]);
 		$this->view("client/layout",[
-			"page"=>"policy",
-			"title"=>"Chính sách đổi trả",
+			"page"=>"he_thong_cua_hang",
+			"title"=>"Hệ thống cửa hàng",
 			"dataCategories" => $categories,
 			"categorie_actives" => $categories_actives
 		]);
