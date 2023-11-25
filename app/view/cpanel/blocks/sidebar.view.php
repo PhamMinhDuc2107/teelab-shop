@@ -108,6 +108,20 @@ data-parent="#accordionSidebar">
 </div>
 </div>
 </li>
+<li class="nav-item">
+	<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#task"
+	aria-expanded="true" aria-controls="#task">
+	<i class="fa-solid fa-clipboard-list"></i>
+	<span>Nhiệm vụ</span>
+</a>
+<div id="task" class="collapse" aria-labelledby="headingUtilities"
+data-parent="#accordionSidebar">
+<div class="py-2 bg-white rounded collapse-inner">
+	<a class="collapse-item" href="<?php echo ROOT ?>task">Xem nhiệm vụ</a>
+	<a class="collapse-item" href="<?php echo ROOT ?>task/add_task">Thêm nhiệm vụ</a>
+</div>
+</div>
+</li>
 <!-- Divider -->
 <hr class="sidebar-divider d-none d-md-block">
 <!-- Sidebar Toggler (Sidebar) -->

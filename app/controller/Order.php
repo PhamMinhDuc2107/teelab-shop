@@ -51,6 +51,10 @@
             "data" => $data
          ]);
       }
+      /**
+      * @param int $id
+      * @return void
+      */
       public function order_detail($id)
       {
 		   $this->PermissionMiddleware->handle("order/order_detail");

@@ -7,7 +7,11 @@ class Model
    public $order_type   = "ASC";
    public $order_column = "id";
    public $errors       = [];
-
+   public function getAll()
+   {
+      $query = "select * from $this->table order by $this->order_column $this->order_type";
+      return $this->query($query);
+   }
    public function findAll()
    {
       $query = "select * from $this->table order by $this->order_column $this->order_type limit $this->limit offset $this->offset";

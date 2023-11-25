@@ -4,7 +4,7 @@
 		<?php 
 		$category = isset($data['category']) ? $data['category'] : "";
 		?>
-		<input type="text" name="name" class="form-control" id="exampleInputEmail1" value="<?php echo isset($category[0]) ? $category[0]->name : '' ?>">
+		<input type="text" name="name" class="form-control" id="exampleInputEmail1" value="<?php echo isset($category[0]) ? $category[0]->title : '' ?>">
 	</div>
 	<div class="mb-3 col-6">
 		<label for="exampleInputPassword1" class="form-label">Slug</label>

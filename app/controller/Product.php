@@ -55,7 +55,7 @@ class Product extends Controller
 	{
 		$this->PermissionMiddleware->handle("product/add_product");
 
-		$categories = $this->CategoriesModel->findAll();
+		$categories = $this->CategoriesModel->getAll();
 		$this->view("cpanel/layout", [
 			"title" => "Add Product - Dashboard",
 			"page"=>"products/form_product",

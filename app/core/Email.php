@@ -2,8 +2,17 @@
    use PHPMailer\PHPMailer\PHPMailer;
    use PHPMailer\PHPMailer\Exception;
    class Email extends Controller
-   {
-      public function send_mail($title, $data, $email ,$view="client/send_mail")
+   {  
+      /**
+       * send email
+       * @access public
+       * @param string $title
+       * @param array $data
+       * @param string|array $email
+       * @param string $view
+       * @return void
+       */
+      public function send_mail(string $title,array $data, string|array  $email ,string $view="client/send_mail")
       {
          $mail = new PHPMailer(true);
          try {
@@ -15,13 +24,11 @@
             $mail->Password = EMAIL_SECRET;
             $mail->SMTPSecure = EMAIL_SMTP_SECURE;
             $mail->Port = EMAIL_PORT;
- 
-             $mail->setFrom(EMAIL, 'Oder Information PMD - SHOP');
-             $mail->addAddress($email, 'Recipient Name');
-            
-             $mail->isHTML(true);
-             $mail->Subject = $title;
-             ob_start();
+            $mail->setFrom(EMAIL, 'Oder Information PMD - SHOP');
+            $mail->addAddress($email, 'Recipient Name');
+            $mail->isHTML(true);
+            $mail->Subject = $title;
+            ob_start();
             $this->view($view,['data' => $data]);
             $emailBody = ob_get_clean();
              $mail->Body    =  $emailBody;
