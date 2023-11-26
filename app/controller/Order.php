@@ -37,18 +37,21 @@
 		   {
             $q = esc($_GET['q']);
             $col_name = ['madonhang', "name"];
-            $products = $this->OrderModel->getDataSearch($col_name, $q);
+            $data = $this->OrderModel->gêtSearchOrder($col_name, $q);
 		   }else 
 		   {
-		   	$products = $this->OrderModel->getDataOrder();
+            $data = $this->OrderModel->getDataOrder();
          }
-         $data = $this->OrderModel->getDataOrder();
-         
+         $count = count($data);
+         $limit = $this->OrderModel->limit;
+         $per_page = ceil($count/$limit);	
          $this->view("cpanel/layout", [
             "title" => "Manager Order - Orders",
             "page"=>"order/index",
             "heading" => "Orders",
-            "data" => $data
+            "data" => $data,
+            "pagination" => $per_page,
+			   "col" => $this->ProductModel->allowedColumns,
          ]);
       }
       /**

@@ -16,10 +16,11 @@ if(!empty($_GET['msg']))
     <tr>
       <th class="col-1">Id</th>
       <th class="col-2">Title</th>
-      <th class="col-2">Assigned_to</th>
-      <th class="col-2">Created_by</th>
+      <th class="col-1">Assigned_to</th>
+      <th class="col-1">Created_by</th>
       <th class="col-2">Created_at</th>
       <th class="col-2">Due_date</th>
+      <th class="col-2">Status</th>
       <th class="col-2">Actions</th>
 
     </tr>
@@ -30,7 +31,7 @@ if(!empty($_GET['msg']))
         <tr>
           <th class="col-1"><?php echo $item->id ?></th>
           <td class="col-2"><?php echo $item->title ?></td>
-          <td class="col-2">
+          <td class="col-1">
          <?php
             foreach($admins as $admin)
             {
@@ -40,7 +41,7 @@ if(!empty($_GET['msg']))
                }
             }
           ?></td>
-          <td class="col-2">
+          <td class="col-1">
          <?php
             foreach($admins as $admin)
             {
@@ -58,6 +59,13 @@ if(!empty($_GET['msg']))
          <?php
            echo $item->due_date;
           ?></td>
+          <td class="col-2 text-center">
+            <?php if($item->status === 1):?>
+                <span style="color:rgb(30, 198, 83);">Hoàn thành</span>
+            <?php else:?>
+                <span style="color:rgb(19, 183, 233)">Chưa hoàn thành</span>
+            <?php endif;?>
+          </td>
           <td class="col-2">
             <div class="d-flex justify-content-center align-items-center">
               <a href="<?php echo ROOT.'task/task_detail/'.$item->id ?>"  class="d-block text-primary btn-edit-category">

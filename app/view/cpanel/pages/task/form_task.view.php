@@ -5,7 +5,7 @@
 	$task = isset($data["task"]) ? $data["task"][0] :"";
 ?>
 
-<form method="post" action="<?php echo ROOT.$data['action'] ?>" enctype="multipart/form-data">
+<form method="post" action="<?php echo ROOT.$data['action'] ?>">
    <div class="mb-3 col-12 text-center text-danger">
       <?php echo isset($data['errors']) ? $data['errors'] : ""?>
    </div>
