@@ -1,7 +1,7 @@
 <?php
    use PHPMailer\PHPMailer\PHPMailer;
    use PHPMailer\PHPMailer\Exception;
-   class Email extends Controller
+   class Email
    {  
       /**
        * send email
