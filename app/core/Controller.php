@@ -1,6 +1,11 @@
 <?php
 Class Controller
 {
+   /**
+    * function view 
+    * @param string $name
+    * @param array $data
+    */
    public function view(string $name, array $data = [])
    {  
       $filename = "./app/view/".$name.".view.php";
@@ -13,6 +18,10 @@ Class Controller
          require $filename;
       }
    }
+   /**
+    * function model()
+    * @param string $name
+    */
    public function model(string $name)
    {  
       $filename = "./app/model/".$name.".php";
@@ -23,6 +32,10 @@ Class Controller
       }
       return false;
    }
+   /**
+    * function middleware
+    * @param string $name
+    */
    public function middleware(string $name)
    {  
       $filename = "./app/middleware/".$name.".php";

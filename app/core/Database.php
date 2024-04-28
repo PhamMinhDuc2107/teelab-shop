@@ -1,7 +1,10 @@
 <?php 
 Trait Database
 {
-
+   /**
+    * func connect()
+    * @return string $con
+    */
    private function connect()
    {
       try {
@@ -14,7 +17,12 @@ Trait Database
          echo "". $e->getMessage();
       }
    }
-
+   /**
+    * function query
+    * @param string $query
+    * @param array $data
+    * @return array $result
+    */
    public function query($query, $data = [])
    {
       $con = $this->connect();
@@ -30,6 +38,12 @@ Trait Database
       }
       return false;
    }
+   /**
+    * function query_id 
+    * @param string $query
+    * @param array $data
+    * @return 
+    */
    public function query_id($query, $data = [])
    {
       $con = $this->connect();
@@ -37,9 +51,14 @@ Trait Database
       if($stm->execute($data))
       {
          return $con->lastInsertId();
-         
       }
    }
+   /**
+    * function get_row 
+    * @param string $query
+    * @param array $data
+    * @return array $result
+    */
    public function get_row($query, $data = [])
    {
       $con = $this->connect();

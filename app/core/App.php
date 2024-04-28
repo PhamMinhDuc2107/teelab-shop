@@ -3,6 +3,7 @@ class App {
    private $controller ='home';
    private $action= 'index';
    private $params =[];
+   
    function __construct () {
       $url = $this->progressUrl();
       if($url != null) {
@@ -27,8 +28,11 @@ class App {
       $this->params = $url ? array_values($url) : [];
       call_user_func_array([$this->controller, $this->action], $this->params);
    }
-
-   function progressUrl() {
+   /**
+    * function progressUrl 
+    * @return string $url
+    */
+   function progressUrl()  {
       $url = isset($_GET['url'] )?$_GET['url'] : null;
       if($url != null) {
          $url = explode("/", filter_var(trim($url,"/")));
