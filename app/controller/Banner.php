@@ -16,31 +16,11 @@ class Banner extends Controller
 	public function index()
 	{
 		$this->PermissionMiddleware->handle("banner");
-		if(isset($_GET['page']) && $_GET['page'] !== "")
-		{
-			$this->BannerModel->offset = (esc($_GET['page']) - 1 ) * $this->BannerModel->limit;
-		}
-		if(isset($_GET['col']) && $_GET['col'] !== "") {
-			$this->BannerModel->order_column =esc( $_GET['col']);
-		}
-		if(isset($_GET['order']) && $_GET['order'] !== "") {
-			$this->BannerModel->order_type = esc($_GET['order']);
-		}
-		if(isset($_GET['q']) && $_GET['q'] !== "") 
-		{
-			$q = esc($_GET['q']);
-			$col_name = ['title'];
-			$banner = $this->BannerModel->getDataSearch($col_name, $q);
+      BaseModelHelper::handleSorting($this->BannerModel);
+      $banner = BaseModelHelper::getSearchData($this->BannerModel, ['username', "email"]);
+      $per_page = BaseModelHelper::getPaginationData($this->BannerModel);
 
-		}else 
-		{
-			$banner = $this->BannerModel->findAll();
-
-		}
-		$count = $this->BannerModel->getTotalRecords();
-		$limit = $this->BannerModel->limit;
-		$per_page = ceil($count/$limit);
-		$this->view("cpanel/layout", [
+      $this->view("cpanel/layout", [
 			"title" => "List Banner - Dashboard",
 			"page"=>"banner/index",
 			"heading" => "Banner",

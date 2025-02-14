@@ -19,29 +19,10 @@ class Product extends Controller
 	public function index() 
 	{
 		$this->PermissionMiddleware->handle("product");
+      BaseModelHelper::handleSorting($this->ProductModel);
+      $products = BaseModelHelper::getSearchData($this->ProductModel, ['name', "category"]);
+      $per_page = BaseModelHelper::getPaginationData($this->ProductModel);
 
-		if(isset($_GET['page']) && $_GET['page'] !== "")
-		{
-			$this->ProductModel->offset = (esc($_GET['page']) - 1 ) * $this->ProductModel->limit;
-		}
-		if(isset($_GET['col']) && $_GET['col'] !== "") {
-			$this->ProductModel->order_column = esc($_GET['col']);
-		}
-		if(isset($_GET['order']) && $_GET['order'] !== "") {
-			$this->ProductModel->order_type = esc($_GET['order']);
-		}
-		if(isset($_GET['q']) && $_GET['q'] !== "") 
-		{
-			$q = esc($_GET['q']);
-			$col_name = ['name', "category"];
-			$products = $this->ProductModel->getDataSearch($col_name, $q);
-		}else 
-		{
-			$products = $this->ProductModel->getDataProducts();
-		}
-		$count = $this->ProductModel->getTotalRecords();
-		$limit = $this->ProductModel->limit;
-		$per_page = ceil($count/$limit);		
 		$this->view("cpanel/layout", [
 			"title" => "List Product - Dashboard",
 			"page"=>"products/index",

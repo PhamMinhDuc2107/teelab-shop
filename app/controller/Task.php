@@ -21,28 +21,10 @@
       {
 		$this->PermissionMiddleware->handle("task");
 
-         if(isset($_GET['page']) && $_GET['page'] !== "")
-		{
-			$this->TaskModel->offset = (esc($_GET['page']) - 1 ) * $this->TaskModel->limit;
-		}
-		if(isset($_GET['col']) && $_GET['col'] !== "") {
-			$this->TaskModel->order_column = esc($_GET['col']);
-		}
-		if(isset($_GET['order']) && $_GET['order'] !== "") {
-			$this->TaskModel->order_type = esc($_GET['order']);
-		}
-		if(isset($_GET['q']) && $_GET['q'] !== "") 
-		{
-			$q = esc($_GET['q']);
-			$col_name = ['title'];
-			$tasks = $this->TaskModel->getDataSearch($col_name, $q);
-		}else 
-		{
-			$tasks = $this->TaskModel->getAll();
-		}
-      $count = $this->TaskModel->getTotalRecords();
-      $limit = $this->TaskModel->limit;
-		$per_page = ceil($count/$limit);	
+         BaseModelHelper::handleSorting($this->TaskModel);
+         $tasks = BaseModelHelper::getSearchData($this->TaskModel, ['username', "email"]);
+         $per_page = BaseModelHelper::getPaginationData($this->TaskModel);
+
          $admins= $this->AdminModel->getAll();
          $this->view("cpanel/layout", [
             'page'=>"task/index",

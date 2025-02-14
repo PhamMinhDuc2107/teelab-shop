@@ -15,28 +15,10 @@
       public function index()
       {  
 		   $this->PermissionMiddleware->handle("coupon");
-         if(isset($_GET['page']) && $_GET['page'] !== "")
-         {
-            $this->CouponModel->offset = (esc($_GET['page']) - 1 ) * $this->CouponModel->limit;
-         }
-         if(isset($_GET['col']) && $_GET['col'] !== "") {
-            $this->CouponModel->order_column = esc($_GET['col']);
-         }
-         if(isset($_GET['order']) && $_GET['order'] !== "") {
-            $this->CouponModel->order_type = esc($_GET['order']);
-         }
-         if(isset($_GET['q']) && $_GET['q'] !== "") 
-         {
-            $q = esc($_GET['q']);
-            $col_name = ['code', ];
-            $coupons = $this->CouponModel->getDataSearch($col_name, $q);
-         }else 
-         {
-            $coupons = $this->CouponModel->findAll();
-         }
-         $count = $this->CouponModel->getTotalRecords();
-         $limit = $this->CouponModel->limit;
-         $per_page = ceil($count/$limit);		
+         BaseModelHelper::handleSorting($this->CouponModel);
+         $coupons = BaseModelHelper::getSearchData($this->CouponModel, ['code']);
+         $per_page = BaseModelHelper::getPaginationData($this->CouponModel);
+
          $this->view("cpanel/layout", [
             "title" => "Coupons - Categories",
             "page"=>"coupon/index",
